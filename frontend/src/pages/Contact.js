@@ -26,8 +26,8 @@ export default function Contact() {
     if (!validate()) return;
     setLoading(true);
     try {
-     // Localhost hata kar ye link dalo
-const res = await axios.post("https://eagle-backend-jy3e.onrender.com/api/contact", formData);
+      // ✅ Yahan maine 'formData' ki jagah 'form' kar diya hai
+      const res = await axios.post("https://eagle-backend-jy3e.onrender.com/api/contact", form);
       if (res.status === 200) {
         setSubmitted(true);
         setForm({ name: "", phone: "", email: "", message: "" });
@@ -132,7 +132,7 @@ const res = await axios.post("https://eagle-backend-jy3e.onrender.com/api/contac
           </motion.div>
         </div>
 
-        {/* ⚖️ THE LAWYER ZONE (ALAG SECTION) */}
+        {/* ⚖️ THE LAWYER ZONE */}
         <motion.div 
           initial={{ x: -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
