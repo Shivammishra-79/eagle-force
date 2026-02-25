@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦅</text></svg>">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#02040a" />
+    <meta
+      name="description"
+      content="Eagle Force - Elite Security & Legal Compliance Division"
+    />
+    
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦅</text></svg>" />
+    
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+
+    <title>EAGLE FORCE | SECURE SYSTEMS</title>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+      
+      body {
+        background-color: #010208;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* 🌌 ANIMATED BACKGROUND PARTICLES */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(0, 224, 255, 0.05) 0%, transparent 80%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* 🦅 EAGLE BOOT LOADER */
+      #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #010208;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .eagle-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .eagle-logo {
+        font-size: 80px;
+        filter: drop-shadow(0 0 20px #00e0ff);
+        z-index: 2;
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      /* Scanning ring around eagle */
+      .scan-ring {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border: 2px solid #00e0ff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+      }
+
+      .loading-bar-container {
+        width: 250px;
+        height: 2px;
+        background: rgba(255,255,255,0.05);
+        position: relative;
+        overflow: hidden;
+        margin-top: 30px;
+        border-radius: 10px;
+      }
+
+      .loading-bar {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, #00e0ff, transparent);
+        left: -100%;
+        animation: load 2s infinite ease-in-out;
+      }
+
+      .system-text {
+        margin-top: 20px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 11px;
+        letter-spacing: 5px;
+        color: #00e0ff;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+      }
+
+      @keyframes load {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px #00e0ff); }
+        50% { transform: scale(1.15); filter: drop-shadow(0 0 30px #00e0ff); }
+      }
+
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* Custom Scrollbar - Khatranak Look */
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #010208; }
+      ::-webkit-scrollbar-thumb { 
+        background: linear-gradient(#010208, #00e0ff, #010208); 
+        border-radius: 5px; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="eagle-wrapper">
+        <div class="scan-ring"></div>
+        <div class="eagle-logo">🦅</div>
+      </div>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+      <div class="system-text">Establishing Secure Connection...</div>
+    </div>
+
+    <noscript>Security Alert: JavaScript is required to access Eagle Force Tactical Interface.</noscript>
+    
+    <div id="root"></div>
+
+    <script>
+      // Page load behavior
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('loading-screen');
+        // Extra delay to show off the cool animation
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 800);
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>
