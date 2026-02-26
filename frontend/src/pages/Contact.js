@@ -24,36 +24,33 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+ // ... baaki imports same rahenge
+const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
 
     try {
-      // 🚀 Auto-switch for Local and Production
-      const API_URL = window.location.hostname === "localhost" 
-        ? "http://localhost:5000" 
-        : "https://eagle-backend-jy3e.onrender.com";
+        // Auto-switch: Local par 5000, Production par Render
+        const API_URL = window.location.hostname === "localhost" 
+            ? "http://localhost:5000" 
+            : "https://eagle-backend-jy3e.onrender.com";
 
-      const res = await axios.post(`${API_URL}/api/contact`, form, {
-        headers: { "Content-Type": "application/json" }
-      });
-      
-      if (res.status === 200 || res.status === 201) {
-        setSubmitted(true);
-        setForm({ name: "", phone: "", email: "", message: "" });
-        setTimeout(() => setSubmitted(false), 3000);
-      }
+        const res = await axios.post(`${API_URL}/api/contact`, form);
+        
+        if (res.status === 200) {
+            setSubmitted(true);
+            setForm({ name: "", phone: "", email: "", message: "" });
+            setTimeout(() => setSubmitted(false), 5000);
+        }
     } catch (err) { 
-      // 🔍 Detailed Error Logging
-      console.error("Submission Error:", err.response?.data || err.message);
-      
-      const errorMsg = err.response?.data?.details || err.response?.data?.error || "Server Connection Failed";
-      alert(`Message failed: ${errorMsg}`); 
+        console.error("Submission Error:", err.response?.data || err.message);
+        const detail = err.response?.data?.details || "Authentication Failed. Check API Key.";
+        alert(`❌ Error: ${detail}`); 
     } finally { 
-      setLoading(false); 
+        setLoading(false); 
     }
-  };
+};
 
   return (
     <div style={styles.container}>
