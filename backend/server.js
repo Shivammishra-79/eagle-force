@@ -9,29 +9,30 @@ const PORT = process.env.PORT || 10000;
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// 🔍 Console log to verify Env on Render
+// 🔍 Debugging to confirm Env Variables on Render
 console.log("--- SYSTEM CHECK ---");
-console.log("User:", process.env.EMAIL_USER);
-console.log("--- STARTING SERVER ---");
+console.log("Email User:", process.env.EMAIL_USER ? "LOADED ✅" : "MISSING ❌");
+console.log("--------------------");
 
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
   try {
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465, // Render ke liye 465 zyada stable hai
-      secure: true, 
-      pool: true,   // Connections ko maintain rakhne ke liye
+      host: "smtp.gmail.com",
+      port: 465, // Secure Port
+      secure: true,
+      pool: true, // Connection maintain karne ke liye
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      // 🚀 RENDER SPECIFIC FIXES
       tls: {
-        rejectUnauthorized: false // Connection errors se bachne ke liye
+        rejectUnauthorized: false, // Security handshake bypass
       },
-      connectionTimeout: 15000, // 15 seconds timeout
-      greetingTimeout: 10000,
+      connectionTimeout: 20000, // 20 seconds wait time
+      greetingTimeout: 20000,
     });
 
     const mailOptions = {
@@ -43,12 +44,12 @@ app.post("/api/contact", async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("✅ SUCCESS: Email Sent!");
+    console.log("✅ SUCCESS: Email Sent to your Inbox!");
     res.status(200).json({ success: true, message: "Enquiry sent!" });
 
   } catch (err) {
-    console.error("❌ ERROR DETAILS:", err.message);
-    res.status(500).json({ error: "Failed to send email", details: err.message });
+    console.error("❌ FINAL ERROR DETAILS:", err.message);
+    res.status(500).json({ error: "Server Error", details: err.message });
   }
 });
 
