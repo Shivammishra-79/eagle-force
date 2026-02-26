@@ -118,7 +118,7 @@ export default function Navbar() {
           style={styles.navCallBtn}
           onClick={() => window.location.href="tel:+919876543210"}
         >
-          ENFORCE NOW
+          CALL NOW
         </motion.button>
       </div>
 

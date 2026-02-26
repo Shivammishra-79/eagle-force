@@ -4,20 +4,23 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 
 const app = express();
+// Render automatically PORT assign karta hai, isliye process.env.PORT priority hai
 const PORT = process.env.PORT || 5000;
 
-// 🔹 CORS: Production + Localhost dono handle karega
+// 🔹 UPDATED CORS CONFIGURATION
+// Maine "*" (All origins) isliye kiya hai taaki CORS ka jhamela 100% khatam ho jaye
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:5173", "https://eagle-force.vercel.app"], // Apne frontend links yahan add karein
-  methods: ["GET", "POST"],
-  credentials: true
+  origin: "*", 
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
 
+// 🔹 CONTACT FORM ROUTE
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
-  console.log("📩 New Request Received:", req.body);
+  console.log("📩 Incoming Request Data:", req.body);
 
   if (!name || !email || !phone || !message) {
     return res.status(400).json({ error: "Opps! Saari details bhariye." });
@@ -26,32 +29,53 @@ app.post("/api/contact", async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, 
+        pass: process.env.EMAIL_PASS, // 16-digit app password
       },
     });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // Aapko isi email par enquiry aayegi
       replyTo: email,
-      subject: `Eagle Force Enquiry: ${name}`,
-      text: `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`,
+      subject: `🔥 New Eagle Force Enquiry: ${name}`,
+      text: `
+        You have a new contact form submission:
+        ------------------------------------
+        Name:    ${name}
+        Phone:   ${phone}
+        Email:   ${email}
+        Message: ${message}
+        ------------------------------------
+      `,
     };
 
+    // Verify transporter connection before sending
+    await transporter.verify();
+    
     await transporter.sendMail(mailOptions);
-    console.log("✅ Email Sent Successfully!");
-    res.status(200).json({ message: "Success! We will contact you soon." });
+    console.log("✅ SUCCESS: Email sent to", process.env.EMAIL_USER);
+    
+    res.status(200).json({ success: true, message: "Success! We will contact you soon." });
 
   } catch (err) {
-    console.error("❌ Nodemailer Error:", err);
-    res.status(500).json({ error: "Server Error", details: err.message });
+    console.error("❌ SERVER ERROR DETAILS:", err.message);
+    res.status(500).json({ 
+      error: "Server Error", 
+      details: err.message,
+      hint: "Check if EMAIL_USER and EMAIL_PASS are set in Render Environment Variables"
+    });
   }
 });
 
-app.get("/", (req, res) => res.send("Eagle Force API is Live! 🚀"));
+// 🔹 HEALTH CHECK ROUTE
+app.get("/", (req, res) => res.send("Eagle Force API is Running Smoothly! 🚀"));
 
+// 🔹 START SERVER
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is listening on port ${PORT}`);
 });

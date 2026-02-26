@@ -15,39 +15,39 @@ export default function Home() {
   const stats = [
     { num: 500, label: "Cameras Installed" },
     { num: 120, label: "Happy Clients" },
-    { num: 24, label: "Support" },
+    { num: 24, label: "Customer Support" },
     { num: 5, label: "Service Rating" },
-    { num: 1500, label: "On-Field Guards" },
-    { num: 50, label: "City Presence" },
+    { num: 1500, label: "Security Guards" },
+    { num: 50, label: "Cities Reached" },
   ];
 
   const servicesDetailed = [
     {
-      title: "CCTV & Surveillance",
-      points: ["AI Human Detection", "Thermal Night Vision", "Remote Cloud Access", "24/7 Monitoring Center"],
+      title: "CCTV & Security",
+      points: ["Human Detection AI", "Clear Night Vision", "Mobile Phone Access", "24/7 Security Monitoring"],
       icon: "📹",
       path: "/cctv"
     },
     {
-      title: "Housekeeping Elite",
-      points: ["Hospital Grade Sanitization", "Corporate Maintenance", "Industrial Deep Cleaning", "Eco-Chemicals"],
+      title: "Cleaning Services",
+      points: ["Home & Office Sanitization", "Maintenance Work", "Deep Cleaning Service", "Safe Cleaning Chemicals"],
       icon: "🧹",
       path: "/housekeeping"
     },
     {
-      title: "Society Protection",
-      points: ["Visitor Management", "Gate Pass Automation", "Armed/Unarmed Guards", "Fire Safety Drills"],
+      title: "Society Security",
+      points: ["Visitor Record App", "Automatic Gate Pass", "Trained Security Guards", "Fire Safety Training"],
       icon: "🏘️",
       path: "/security"
     }
   ];
 
-  const serviceKeywords = ["CCTV", "Security", "Housekeeping", "Surveillance", "Rapid Support", "Fire Safety", "Guard Force", "Facility Mgmt"];
+  const serviceKeywords = ["CCTV", "Security", "Cleaning", "Monitoring", "Quick Support", "Fire Safety", "Guard Force", "Management"];
 
   const features = [
-    "Highly Trained Guards", "24/7 Rapid Support", "Latest Technology",
-    "Verified Staff", "Pan India Service", "Corporate Experience",
-    "Real-time Reporting", "Custom Security Plans"
+    "Well Trained Guards", "24/7 Quick Support", "Modern Technology",
+    "Verified Staff", "Service Across India", "Office Security Experts",
+    "Daily Work Reports", "Custom Security Plans"
   ];
 
   return (
@@ -70,7 +70,7 @@ export default function Home() {
       {/* 🟢 TOP STATUS BAR */}
       <div style={styles.statusBar}>
         <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 1.5 }}>●</motion.span> 
-        SECURE LINK ESTABLISHED | EAGLE_FORCE_INTERNAL | SYSTEM_READY_2026
+        SECURE CONNECTION | EAGLE FORCE SECURITY | SYSTEM READY 2026
       </div>
 
       {/* 🔥 HERO SECTION */}
@@ -80,7 +80,7 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} style={styles.heroContent}>
             <h1 style={styles.heroTitle} className="hero-title">
               EAGLE FORCE<br />
-              <span style={styles.cyanText}>INTELLIGENCE</span>
+              <span style={styles.cyanText}>SECURITY SERVICES</span>
             </h1>
             <div style={styles.keywordCloud}>
               {serviceKeywords.map((k, i) => (
@@ -88,8 +88,8 @@ export default function Home() {
               ))}
             </div>
             <p style={styles.heroSub}>
-              Advanced Protection for <b>Societies</b>, <b>Corporates</b>, and <b>Industries</b>.
-              Next-Gen AI Surveillance & Elite Facility Management.
+              Best Protection for <b>Societies</b>, <b>Offices</b>, and <b>Factories</b>.
+              Modern AI Cameras & Professional Security Management.
             </p>
             <div style={styles.ctaRow} className="cta-row">
               <motion.button 
@@ -97,9 +97,9 @@ export default function Home() {
                 onClick={() => window.location.href="tel:+919876543210"} 
                 style={styles.mainBtn}
               >
-                DEPLOY NOW
+                CALL NOW
               </motion.button>
-              <button onClick={() => navigate("/contact")} style={styles.secBtn}>COMMAND CENTER</button>
+              <button onClick={() => navigate("/contact")} style={styles.secBtn}>CONTACT US</button>
             </div>
           </motion.div>
         </div>
@@ -110,7 +110,7 @@ export default function Home() {
                 style={styles.sideScrollText}
                 className="marquee-text"
             >
-                CCTV SECURITY • HOUSEKEEPING • SURVEILLANCE • PROTECTION • EAGLE FORCE • CCTV SECURITY • HOUSEKEEPING • SURVEILLANCE • PROTECTION • EAGLE FORCE •
+                CCTV SECURITY • CLEANING • MONITORING • PROTECTION • EAGLE FORCE • CCTV SECURITY • CLEANING • MONITORING • PROTECTION • EAGLE FORCE •
             </motion.div>
         </div>
       </section>
@@ -134,7 +134,7 @@ export default function Home() {
       {/* 💎 SERVICE SPECIFICATIONS */}
       <section style={styles.specSection}>
         <div style={styles.sectionHeader}>
-          <h2>// OPERATIONAL_UNITS</h2>
+          <h2>// OUR SERVICES</h2>
           <motion.div animate={{ width: ["0%", "100%"] }} transition={{ duration: 2, repeat: Infinity }} style={styles.headerLine} />
         </div>
         <div style={styles.specGrid} className="spec-grid">
@@ -148,8 +148,8 @@ export default function Home() {
                 {service.points.map((p, i) => <li key={i}> <span style={{color:'#00e0ff'}}>_</span> {p}</li>)}
               </ul>
               <ServiceCard 
-                title="View Protocol" 
-                desc={`Accessing ${service.title}...`} 
+                title="View Details" 
+                desc={`Opening ${service.title}...`} 
                 onClick={() => navigate(service.path)} 
               />
             </div>
@@ -159,7 +159,7 @@ export default function Home() {
 
       {/* ⭐ TACTICAL FEATURES */}
       <section style={styles.featureSection}>
-        <h2 style={styles.centerTitle}>TACTICAL ADVANTAGES</h2>
+        <h2 style={styles.centerTitle}>WHY CHOOSE US?</h2>
         <div style={styles.featureGrid} className="feature-grid">
           {features.map((f, i) => (
             <motion.div 
@@ -177,11 +177,11 @@ export default function Home() {
       {/* 🚀 FINAL CTA */}
       <section style={styles.finalSection}>
         <motion.div initial={{ scale: 0.9 }} whileInView={{ scale: 1 }} style={styles.finalBox}>
-          <h2 style={styles.finalTitle}>INITIALIZE SITE SECURITY AUDIT?</h2>
-          <p style={{opacity: 0.6}}>Eagle Force technicians are on standby for rapid deployment.</p>
+          <h2 style={styles.finalTitle}>WANT A SECURITY CHECK?</h2>
+          <p style={{opacity: 0.6}}>Eagle Force experts are ready to help you secure your place.</p>
           <div style={styles.finalBtns} className="cta-row">
-            <button style={styles.primaryFinal} onClick={() => window.location.href="tel:+919876543210"}>DIRECT LINE</button>
-            <button style={styles.secondaryFinal} onClick={() => navigate("/contact")}>FILE ENQUIRY</button>
+            <button style={styles.primaryFinal} onClick={() => window.location.href="tel:+919876543210"}>CALL US</button>
+            <button style={styles.secondaryFinal} onClick={() => navigate("/contact")}>SEND INQUIRY</button>
           </div>
         </motion.div>
       </section>
