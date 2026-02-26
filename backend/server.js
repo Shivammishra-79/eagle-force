@@ -14,35 +14,34 @@ app.post("/api/contact", async (req, res) => {
   console.log("📩 Incoming Request Data:", req.body);
 
   try {
+    // 🚀 NEW CONFIG: Port 587 (Standard for Cloud Servers)
     const transporter = nodemailer.createTransport({
-      // 🚀 ASLI FIX: Direct Gmail SMTP IPv4 use kar rahe hain
-      host: "74.125.130.108", // Ye smtp.gmail.com ka direct IPv4 hai
-      port: 465,
-      secure: true,
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Port 587 ke liye false hona chahiye
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS, // ddescrcbjgjaiebw
       },
-      // Force IPv4
-      family: 4, 
       tls: {
-        servername: "smtp.gmail.com", // SSL certificate ke liye zaroori hai
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        minVersion: "TLSv1.2"
       },
-      connectionTimeout: 20000
+      connectionTimeout: 30000, // 30 seconds (Render ko thoda time chahiye)
+      greetingTimeout: 20000
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Eagle Force" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
-      subject: `🔥 New Eagle Force Enquiry: ${name}`,
+      subject: `🔥 New enquiry from ${name}`,
       text: `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    // Fast verify and send
+    // ⚡ Direct Send (Verify ko skip karo, wo timeout badhata hai)
     await transporter.sendMail(mailOptions);
-    console.log("✅ SUCCESS: Email sent!");
+    console.log("✅ SUCCESS: Email dispatched!");
     
     res.status(200).json({ success: true, message: "Success!" });
 
@@ -52,7 +51,7 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => res.send("Eagle Force API Live! 🚀"));
+app.get("/", (req, res) => res.send("Eagle Force API Ready! 🚀"));
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server listening on port ${PORT}`);
