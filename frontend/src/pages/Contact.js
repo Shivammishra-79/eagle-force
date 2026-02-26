@@ -33,10 +33,11 @@ const handleSubmit = async (e) => {
     try {
         // Auto-switch: Local par 5000, Production par Render
         const API_URL = window.location.hostname === "localhost" 
-            ? "http://localhost:5000" 
-            : "https://eagle-backend-jy3e.onrender.com";
+  ? "http://localhost:5000" 
+  : "https://eagle-backend-jy3e.onrender.com";
 
-        const res = await axios.post(`${API_URL}/api/contact`, form);
+// Axios call
+const res = await axios.post(`${API_URL}/api/contact`, form);
         
         if (res.status === 200) {
             setSubmitted(true);
