@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 10000; 
 
-app.use(cors({ origin: "*", methods: ["GET", "POST", "OPTIONS"], allowedHeaders: ["Content-Type", "Authorization"] }));
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.post("/api/contact", async (req, res) => {
@@ -14,44 +14,35 @@ app.post("/api/contact", async (req, res) => {
   console.log("📩 Incoming Request Data:", req.body);
 
   try {
-    // 🚀 NEW CONFIG: Port 587 (Standard for Cloud Servers)
+    // 🚀 BREVO SMTP RELAY (Stable for Render)
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "smtp-relay.brevo.com",
       port: 587,
-      secure: false, // Port 587 ke liye false hona chahiye
+      secure: false, // TLS use karega
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // ddescrcbjgjaiebw
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS, // Wahi lambi key jo aapne bheji
       },
-      tls: {
-        rejectUnauthorized: false,
-        minVersion: "TLSv1.2"
-      },
-      connectionTimeout: 30000, // 30 seconds (Render ko thoda time chahiye)
-      greetingTimeout: 20000
     });
 
     const mailOptions = {
       from: `"Eagle Force" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      replyTo: email,
-      subject: `🔥 New enquiry from ${name}`,
-      text: `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`,
+      to: "sam7317892429@gmail.com", // Jahaan aap email chahte hain
+      subject: `🔥 New Contact: ${name}`,
+      text: `Enquiry from: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    // ⚡ Direct Send (Verify ko skip karo, wo timeout badhata hai)
     await transporter.sendMail(mailOptions);
-    console.log("✅ SUCCESS: Email dispatched!");
-    
-    res.status(200).json({ success: true, message: "Success!" });
+    console.log("✅ SUCCESS: Email sent via Brevo!");
+    res.status(200).json({ success: true, message: "Message Sent!" });
 
   } catch (err) {
-    console.error("❌ NODEMAILER ERROR:", err.message);
-    res.status(500).json({ error: "Server Error", details: err.message });
+    console.error("❌ BREVO ERROR:", err.message);
+    res.status(500).json({ error: "Email delivery failed", details: err.message });
   }
 });
 
-app.get("/", (req, res) => res.send("Eagle Force API Ready! 🚀"));
+app.get("/", (req, res) => res.send("API is Live with Brevo! 🚀"));
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server listening on port ${PORT}`);
