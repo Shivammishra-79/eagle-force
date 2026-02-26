@@ -7,7 +7,7 @@ const app = express();
 // Render automatically PORT assign karta hai
 const PORT = process.env.PORT || 10000; 
 
-// 🔹 1. CORS CONFIGURATION (Sabse Pehle)
+// 🔹 1. CORS CONFIGURATION
 app.use(cors({
   origin: "*", 
   methods: ["GET", "POST", "OPTIONS"],
@@ -26,25 +26,17 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // 🔹 3. TRANSPORTER WITH IPv4 & TIMEOUT FIXES
+    // 🔹 3. TRANSPORTER (Fixed Syntax)
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // Use SSL for port 465
+      service: "gmail", // Direct service use karna Render par zyada stable hai
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS, // App Password: ddescrcbjgjaiebw
       },
-      // 🚀 ASLI FIXES: IPv4 connection force aur timeouts
-      socket: {
-        family: 4 // ENETUNREACH error ko khatam karne ke liye
-      },
-      pool: true, // Connections ko reuse karega
+      // SSL/TLS settings jo 'socket.connect' error ko fix karengi
       tls: {
-        rejectUnauthorized: false // Certificate issues bypass karega
-      },
-      connectionTimeout: 20000, // 20 seconds wait karega
-      greetingTimeout: 10000
+        rejectUnauthorized: false 
+      }
     });
 
     const mailOptions = {
@@ -63,8 +55,17 @@ app.post("/api/contact", async (req, res) => {
       `,
     };
 
-    // Connection verify karein
-    await transporter.verify();
+    // Connection verify karein (Promise wrapper for stability)
+    await new Promise((resolve, reject) => {
+      transporter.verify((error, success) => {
+        if (error) {
+          console.error("❌ Transporter Verification Failed:", error);
+          reject(error);
+        } else {
+          resolve(success);
+        }
+      });
+    });
     
     // Email bhejein
     await transporter.sendMail(mailOptions);
@@ -76,8 +77,7 @@ app.post("/api/contact", async (req, res) => {
     console.error("❌ NODEMAILER ERROR:", err.message);
     res.status(500).json({ 
       error: "Server Error", 
-      details: err.message,
-      hint: "Check Render Env Variables for correct EMAIL_USER and EMAIL_PASS"
+      details: err.message 
     });
   }
 });
