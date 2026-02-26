@@ -6,12 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
+app.use(cors({ origin: "*", methods: ["GET", "POST", "OPTIONS"], allowedHeaders: ["Content-Type", "Authorization"] }));
 app.use(express.json());
 
 app.post("/api/contact", async (req, res) => {
@@ -23,32 +18,33 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // 🔹 UPDATED TRANSPORTER FOR PRODUCTION
+    // 🔹 MANUALLY CONFIGURED SMTP FOR RENDER
     const transporter = nodemailer.createTransport({
-      service: "gmail",
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // Use SSL
+      port: 465, // SSL Port
+      secure: true, 
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, 
+        pass: process.env.EMAIL_PASS, // ddescrcbjgjaiebw
       },
-      // 🚀 IMPORTANT: Ye timeout aur SSL errors ko rokta hai
+      pool: true, // Connection pool use karega
+      maxConnections: 1,
       tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false // SSL certificate check bypass karega timeout rokne ke liye
       },
-      connectionTimeout: 10000, // 10 seconds
+      connectionTimeout: 20000, // 20 seconds wait karega
+      socketTimeout: 30000, // 30 seconds connection open rakhega
     });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, 
+      to: process.env.EMAIL_USER,
       replyTo: email,
       subject: `🔥 New Eagle Force Enquiry: ${name}`,
       text: `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    // Pehle connection check karega
+    // Verify connection
     await transporter.verify();
     
     await transporter.sendMail(mailOptions);
@@ -58,14 +54,11 @@ app.post("/api/contact", async (req, res) => {
 
   } catch (err) {
     console.error("❌ NODEMAILER ERROR:", err.message);
-    res.status(500).json({ 
-      error: "Server Error", 
-      details: err.message 
-    });
+    res.status(500).json({ error: "Server Error", details: err.message });
   }
 });
 
-app.get("/", (req, res) => res.send("Eagle Force API is Running Smoothly! 🚀"));
+app.get("/", (req, res) => res.send("Eagle Force API is Running! 🚀"));
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server is listening on port ${PORT}`);
