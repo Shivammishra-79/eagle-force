@@ -13,9 +13,9 @@ export default function Navbar() {
 
   // Social Links configuration
   const socialLinks = {
-    instagram: "https://instagram.com/your_id",
-    facebook: "https://facebook.com/your_id",
-    youtube: "https://youtube.com/@your_channel"
+    instagram: "https://instagram.com",
+    facebook: "https://facebook.com",
+    youtube: "https://youtube.com"
   };
 
   useEffect(() => {
