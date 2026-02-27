@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaUserSecret, FaGavel, FaFileSignature, FaUserCheck, FaUserShield, FaBuilding, FaHandshake } from "react-icons/fa";
+import { 
+  FaShieldAlt, FaUserSecret, FaGavel, FaFileSignature, FaUserCheck, 
+  FaUserShield, FaBuilding, FaHandshake, FaBalanceScale, FaFileContract 
+} from "react-icons/fa";
 
 export default function Security() {
+  // 🚀 Har portal link par aapka portfolio khulega
+  const portfolioLink = "https://shivam-portfolio-inky.vercel.app/";
+
   const securityUnits = [
     {
       title: "SOCIETY GUARD FORCE",
@@ -25,59 +31,78 @@ export default function Security() {
 
   const legalServices = [
     {
+      title: "SOCIETY FORMATION",
+      icon: <FaBuilding />,
+      desc: "Full legal assistance in registration and formation of new Housing Societies.",
+    },
+    {
       title: "RENTAL AGREEMENTS",
       icon: <FaFileSignature />,
       desc: "Seamless digital and physical rental agreement services for flat owners & tenants.",
-      link: "https://example-lawyer-site.com" // Aap yahan apna link daal sakte hain
+    },
+    {
+      title: "DEEMED CONVEYANCE",
+      icon: <FaFileContract />,
+      desc: "Legal processing for land ownership transfer from builder to the society.",
     },
     {
       title: "LEGAL CONSULTANCY",
       icon: <FaGavel />,
-      desc: "Society by-laws, legal disputes, and property documentation handled by experts.",
-      link: "https://example-lawyer-site.com"
+      desc: "Handling society by-laws, legal disputes, and property documentation.",
     },
     {
       title: "NOTARY & STAMP DUTY",
       icon: <FaHandshake />,
-      desc: "Instant notary services and e-stamping protocols for all society documents.",
-      link: "https://example-lawyer-site.com"
+      desc: "Instant notary services and e-stamping protocols for all legal documents.",
+    },
+    {
+      title: "DISPUTE RESOLUTION",
+      icon: <FaBalanceScale />,
+      desc: "Mediation and legal support for internal society or builder-related conflicts.",
     }
   ];
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" }
+    })
+  };
 
   return (
     <div style={styles.container}>
       <style>{`
         @media (max-width: 900px) {
-          .sec-grid { grid-template-columns: 1fr 1fr !important; }
+          .sec-grid, .legal-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 600px) {
           .sec-grid, .legal-grid { grid-template-columns: 1fr !important; }
           .hero-title { font-size: 30px !important; }
         }
-        .legal-card:hover { border-color: #00e0ff !important; background: rgba(0, 224, 255, 0.05) !important; }
+        .legal-card:hover { 
+            border-color: #00e0ff !important; 
+            background: rgba(0, 224, 255, 0.05) !important; 
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.1);
+        }
       `}</style>
 
       <div style={styles.wrapper}>
         {/* 🔥 HERO SECTION */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} style={styles.header}>
-          <div style={styles.tag}>// SECURITY_&_COMPLIANCE_DIVISION</div>
+        <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={styles.header}>
+          <div style={styles.tag}>// SECURITY_&_LEGAL_COMPLIANCE</div>
           <h1 className="hero-title" style={styles.title}>ELITE <span style={{color: '#00e0ff'}}>PROTECTION</span></h1>
           <p style={styles.subtitle}>
-            From tactical manpower deployment to legal documentation compliance. 
-            Eagle Force provides a 360° shield for your society.
+            Tactical manpower deployment and professional legal documentation. 
+            Eagle Force handles everything from security to society by-laws.
           </p>
         </motion.div>
 
         {/* 🛡 MANPOWER GRID */}
         <div style={styles.grid} className="sec-grid">
           {securityUnits.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              style={styles.card}
-            >
+            <motion.div key={i} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} style={styles.card}>
               <div style={styles.imgWrap}>
                 <img src={item.img} alt={item.title} style={styles.img} />
                 <div style={styles.iconOverlay}>{item.icon}</div>
@@ -92,22 +117,28 @@ export default function Security() {
 
         {/* ⚖️ LEGAL & LAWYER SECTION */}
         <div style={styles.legalSection}>
-          <div style={styles.legalHeader}>
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} style={styles.legalHeader}>
             <FaGavel style={{color: '#00e0ff', fontSize: '24px'}} />
-            <h2 style={{margin: 0, fontSize: '22px', letterSpacing: '2px'}}>LEGAL & DOCUMENTATION UNIT</h2>
+            <h2 style={{margin: 0, fontSize: '22px', letterSpacing: '2px', fontFamily: 'Orbitron, sans-serif'}}>LEGAL & DOCUMENTATION UNIT</h2>
             <div style={styles.line} />
-          </div>
+          </motion.div>
 
+          {/* Expanded Legal Grid with 6 Services */}
           <div style={styles.grid} className="legal-grid">
             {legalServices.map((service, idx) => (
               <motion.a
-                href={service.link}
+                href={portfolioLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 key={idx}
+                custom={idx}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
                 className="legal-card"
                 style={styles.legalCard}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8 }}
               >
                 <div style={styles.legalIcon}>{service.icon}</div>
                 <h4 style={styles.legalTitle}>{service.title}</h4>
@@ -120,9 +151,11 @@ export default function Security() {
 
         {/* 🚀 CTA */}
         <motion.div 
-          whileHover={{ scale: 1.01 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.02, backgroundColor: '#fff', color: '#000' }}
           style={styles.cta}
-          onClick={() => window.location.href="tel:+919876543210"}
+          onClick={() => window.location.href="tel:+918998998989"}
         >
           <FaUserShield style={{marginRight: '15px'}} />
           NEED EMERGENCY SECURITY OR LEGAL AID? CONNECT_NOW
@@ -137,35 +170,23 @@ const styles = {
   wrapper: { maxWidth: 1200, margin: "0 auto", padding: "140px 20px 60px" },
   header: { textAlign: "center", marginBottom: 70 },
   tag: { color: "#00e0ff", fontSize: 10, letterSpacing: 5, fontWeight: "bold", marginBottom: 15 },
-  title: { fontSize: 50, fontWeight: "900", margin: 0, letterSpacing: 2 },
+  title: { fontSize: 50, fontWeight: "900", margin: 0, letterSpacing: 2, fontFamily: 'Orbitron, sans-serif' },
   subtitle: { opacity: 0.6, fontSize: 15, maxWidth: 700, margin: "20px auto", lineHeight: 1.7 },
-
   grid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 25 },
   card: { background: "#0a0c14", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 4, overflow: "hidden" },
   imgWrap: { position: "relative", height: 180 },
   img: { width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.6)" },
   iconOverlay: { position: 'absolute', bottom: 15, left: 15, background: '#00e0ff', color: '#000', padding: '10px', borderRadius: '2px', display: 'flex' },
-  
   cardContent: { padding: 25 },
   cardTitle: { fontSize: 17, fontWeight: "900", marginBottom: 10, letterSpacing: 1 },
   cardDesc: { fontSize: 13, color: "#888", lineHeight: 1.6 },
-
-  legalSection: { marginTop: 100, padding: '40px', background: 'rgba(255,255,255,0.01)', border: '1px solid #111' },
+  legalSection: { marginTop: 100, padding: '40px', background: 'rgba(255,255,255,0.01)', border: '1px solid #111', borderRadius: '8px' },
   legalHeader: { display: 'flex', alignItems: 'center', gap: 20, marginBottom: 40 },
   line: { flex: 1, height: '1px', background: 'rgba(0,224,255,0.2)' },
-
-  legalCard: { 
-    background: "transparent", border: "1px solid rgba(255,255,255,0.05)", padding: "30px", 
-    textDecoration: 'none', color: 'inherit', transition: '0.3s' 
-  },
+  legalCard: { background: "transparent", border: "1px solid rgba(255,255,255,0.05)", padding: "30px", textDecoration: 'none', color: 'inherit', transition: '0.3s', display: 'block' },
   legalIcon: { fontSize: '28px', color: '#00e0ff', marginBottom: '15px' },
   legalTitle: { fontSize: '16px', fontWeight: '900', margin: '0 0 10px 0', letterSpacing: '1px' },
   legalDesc: { fontSize: '12px', color: '#aaa', lineHeight: '1.5', marginBottom: '20px' },
   visitLink: { fontSize: '10px', fontWeight: 'bold', color: '#00e0ff', letterSpacing: '1px' },
-
-  cta: {
-    marginTop: 60, background: '#00e0ff', color: '#000', padding: '25px', 
-    textAlign: 'center', fontWeight: '900', cursor: 'pointer', fontSize: '14px',
-    display: 'flex', justifyContent: 'center', alignItems: 'center', letterSpacing: '1px'
-  }
+  cta: { marginTop: 60, background: '#00e0ff', color: '#000', padding: '25px', textAlign: 'center', fontWeight: '900', cursor: 'pointer', fontSize: '14px', display: 'flex', justifyContent: 'center', alignItems: 'center', letterSpacing: '1px', transition: 'all 0.3s ease' }
 };
