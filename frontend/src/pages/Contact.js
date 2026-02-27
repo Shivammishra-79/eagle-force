@@ -19,17 +19,30 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic Validation
+    if(!form.email || !form.name) {
+      alert("Please fill in your name and email.");
+      return;
+    }
+
     setLoading(true);
     try {
       const API_URL = window.location.hostname === "localhost" 
         ? "http://localhost:5000" : "https://eagle-backend-jy3e.onrender.com";
+      
       const res = await axios.post(`${API_URL}/api/contact`, form);
       if (res.status === 200) {
         setSubmitted(true);
         setForm({ name: "", phone: "", email: "", message: "" });
         setTimeout(() => setSubmitted(false), 5000);
       }
-    } catch (err) { alert("Error: System Busy!"); } finally { setLoading(false); }
+    } catch (err) { 
+      console.error(err);
+      alert("Error: System Busy! Check connection."); 
+    } finally { 
+      setLoading(false); 
+    }
   };
 
   return (
@@ -102,18 +115,51 @@ export default function Contact() {
           >
             <h3 style={styles.cardTitle}>// SEND A MESSAGE</h3>
             <form onSubmit={handleSubmit} style={styles.form}>
-              <input placeholder="Your Name" name="name" value={form.name} onChange={handleChange} style={styles.input} />
-              <input placeholder="Phone Number" name="phone" value={form.phone} onChange={handleChange} style={styles.input} />
-              <textarea placeholder="How can we help you?" name="message" value={form.message} onChange={handleChange} style={styles.textarea} />
+              <input 
+                type="text"
+                placeholder="Your Name" 
+                name="name" 
+                value={form.name} 
+                onChange={handleChange} 
+                style={styles.input} 
+                required
+              />
+              <input 
+                type="tel"
+                placeholder="Phone Number" 
+                name="phone" 
+                value={form.phone} 
+                onChange={handleChange} 
+                style={styles.input} 
+              />
+              {/* FIXED EMAIL FIELD HERE */}
+              <input 
+                type="email"
+                placeholder="Official Email Address" 
+                name="email" 
+                value={form.email} 
+                onChange={handleChange} 
+                style={styles.input} 
+                required
+              />
+
+              <textarea 
+                placeholder="How can we help you?" 
+                name="message" 
+                value={form.message} 
+                onChange={handleChange} 
+                style={styles.textarea} 
+                required
+              />
               <motion.button 
                 whileHover={{ scale: 1.02, backgroundColor: '#00e0ff', color: '#000' }}
                 whileTap={{ scale: 0.98 }}
                 style={styles.btn} 
                 disabled={loading}
               >
-                {loading ? "SENDING..." : "SEND MESSAGE"}
+                {loading ? "ESTABLISHING CONNECTION..." : "SEND MESSAGE"}
               </motion.button>
-              {submitted && <p style={styles.success}>✅ Message sent! We will contact you.</p>}
+              {submitted && <p style={styles.success}>✅ Transmission Successful! Our team will contact you.</p>}
             </form>
           </motion.div>
         </div>
@@ -146,7 +192,7 @@ export default function Contact() {
       <div className="map-box">
         <div className="radar-line" />
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120612.92956041181!2d72.95551327122822!3d19.144670051147575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8fcfe76fd59%3A0xcf367d85bc8c897a!2sNavi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v17000000000004"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15068.79469176378!2d72.981882!3d19.220199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b9687105930b%3A0xa196f424c53c3912!2sBalkum%20Pada%2C%20Majiwada%2C%20Thane%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
           style={styles.mapIframe}
           allowFullScreen=""
           loading="lazy"
@@ -157,6 +203,7 @@ export default function Contact() {
   );
 }
 
+// SocialIcon & Styles remain unchanged...
 function SocialIcon({ href, icon, color }) {
   return (
     <motion.a 
