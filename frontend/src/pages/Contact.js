@@ -31,23 +31,22 @@ const handleSubmit = async (e) => {
     setLoading(true);
 
     try {
-        // Auto-switch: Local par 5000, Production par Render
         const API_URL = window.location.hostname === "localhost" 
-  ? "http://localhost:5000" 
-  : "https://eagle-backend-jy3e.onrender.com";
+            ? "http://localhost:5000" 
+            : "https://eagle-backend-jy3e.onrender.com";
 
-// Axios call
-const res = await axios.post(`${API_URL}/api/contact`, form);
+        const res = await axios.post(`${API_URL}/api/contact`, form);
         
         if (res.status === 200) {
             setSubmitted(true);
             setForm({ name: "", phone: "", email: "", message: "" });
+            setErrors({});
             setTimeout(() => setSubmitted(false), 5000);
         }
     } catch (err) { 
         console.error("Submission Error:", err.response?.data || err.message);
-        const detail = err.response?.data?.details || "Authentication Failed. Check API Key.";
-        alert(`❌ Error: ${detail}`); 
+        // User ko error dikhane ke liye
+        alert(`❌ Error: ${err.response?.data?.details || "Server not responding"}`); 
     } finally { 
         setLoading(false); 
     }
