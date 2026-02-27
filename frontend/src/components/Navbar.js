@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaInstagram, FaFacebookF, FaYoutube, FaChevronRight, FaTimes } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaYoutube, FaChevronRight } from "react-icons/fa";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false); 
@@ -10,6 +10,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Social Links configuration
+  const socialLinks = {
+    instagram: "https://instagram.com/your_id",
+    facebook: "https://facebook.com/your_id",
+    youtube: "https://youtube.com/@your_channel"
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -103,8 +110,8 @@ export default function Navbar() {
           </div>
 
           <div style={styles.socialWrap} className="desktop-only">
-            <SocialIcon href="#"><FaInstagram /></SocialIcon>
-            <SocialIcon href="#"><FaFacebookF /></SocialIcon>
+            <SocialIcon href={socialLinks.instagram}><FaInstagram /></SocialIcon>
+            <SocialIcon href={socialLinks.facebook}><FaFacebookF /></SocialIcon>
             <motion.button 
               whileHover={{ scale: 1.05, backgroundColor: "#00e0ff", color: "#000" }}
               style={styles.navCallBtn}
@@ -114,7 +121,6 @@ export default function Navbar() {
             </motion.button>
           </div>
 
-          {/* 📱 HAMBURGER TO X ANIMATION FIXED HERE */}
           <div 
             style={{...styles.hamburger, height: 20, justifyContent: 'space-between'}} 
             className="hamburger-menu" 
@@ -187,9 +193,9 @@ export default function Navbar() {
                  <Link onClick={() => setMobile(false)} style={styles.mobileLink} to="/contact">CONTACT</Link>
                  
                  <div style={styles.mobileSocials}>
-                    <FaInstagram size={24} color="#00e0ff"/> 
-                    <FaFacebookF size={24} color="#00e0ff"/> 
-                    <FaYoutube size={24} color="#00e0ff"/>
+                    <a href={socialLinks.instagram} target="_blank" rel="noreferrer"><FaInstagram size={28} color="#00e0ff"/></a>
+                    <a href={socialLinks.facebook} target="_blank" rel="noreferrer"><FaFacebookF size={28} color="#00e0ff"/></a>
+                    <a href={socialLinks.youtube} target="_blank" rel="noreferrer"><FaYoutube size={28} color="#00e0ff"/></a>
                  </div>
               </motion.div>
             </>
@@ -208,7 +214,6 @@ export default function Navbar() {
   );
 }
 
-// NavItem & SocialIcon components remain exactly the same as your code...
 function NavItem({ to, label, active }) {
   return (
     <motion.div style={{ position: 'relative' }} whileHover={{ y: -2 }}>
@@ -222,21 +227,16 @@ function NavItem({ to, label, active }) {
 
 function SocialIcon({ href, children }) {
   return (
-    <motion.a href={href} target="_blank" style={styles.socialIcon} whileHover={{ scale: 1.2, color: "#00e0ff" }}>
+    <motion.a href={href} target="_blank" rel="noreferrer" style={styles.socialIcon} whileHover={{ scale: 1.2, color: "#00e0ff" }}>
       {children}
     </motion.a>
   );
 }
 
 const styles = {
-  nav: {
-    position: "fixed", top: 0, left: 0, width: "100%", zIndex: 9999,
-    backdropFilter: "blur(20px)", transition: "all 0.4s ease", boxSizing: 'border-box'
-  },
-  container: {
-    maxWidth: "1400px", margin: "0 auto", display: "flex", 
-    justifyContent: "space-between", alignItems: "center", width: "100%"
-  },
+  // ... (Baaki styles wahi hain)
+  nav: { position: "fixed", top: 0, left: 0, width: "100%", zIndex: 9999, backdropFilter: "blur(20px)", transition: "all 0.4s ease", boxSizing: 'border-box' },
+  container: { maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" },
   navScanner: { position: 'absolute', bottom: 0, left: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00e0ff, transparent)' },
   logoContainer: { cursor: "pointer", display: 'flex', flexDirection: 'column' },
   logo: { color: "#fff", fontSize: "clamp(18px, 4vw, 24px)", fontWeight: 900, margin: 0, letterSpacing: 2, fontFamily: "'Syncopate', sans-serif" },
@@ -248,7 +248,7 @@ const styles = {
   dropdownMenu: { position: "absolute", top: 40, left: '50%', transform: 'translateX(-50%)', background: "rgba(5, 8, 22, 0.98)", borderRadius: 4, minWidth: 240, padding: '10px 0', border: "1px solid #00e0ff", overflow: 'hidden' },
   ddItem: { display: "block", padding: "15px 25px", color: "#fff", textDecoration: "none", fontSize: 12, fontWeight: 'bold', borderBottom: '1px solid rgba(255,255,255,0.05)' },
   socialWrap: { display: "flex", gap: 15, alignItems: "center" },
-  socialIcon: { color: "#fff", fontSize: 18, transition: '0.3s' },
+  socialIcon: { color: "#fff", fontSize: 18, transition: '0.3s', textDecoration: 'none' },
   navCallBtn: { background: 'transparent', border: '1px solid #00e0ff', color: '#00e0ff', padding: '8px 16px', fontSize: 11, fontWeight: '900', cursor: 'pointer' },
   hamburger: { display: "none", flexDirection: 'column', gap: 6, cursor: "pointer", position: 'relative', zIndex: 10001 },
   bar: { width: 25, height: 2, background: '#00e0ff', borderRadius: 2 },
