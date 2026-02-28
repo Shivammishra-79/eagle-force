@@ -11,7 +11,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Social Links configuration
   const socialLinks = {
     instagram: "https://instagram.com",
     facebook: "https://facebook.com",
@@ -23,6 +22,19 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // --- TOP PE JANE KA LOGIC ---
+  const handleNav = (path) => {
+    setMobile(false); // Mobile menu close karo
+    if (location.pathname === path) {
+      // Agar same page par ho, toh smooth scroll up
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      // Agar naye page par jana hai, toh navigate aur phir scroll top
+      navigate(path);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -51,7 +63,7 @@ export default function Navbar() {
 
           <motion.div
             style={styles.logoContainer}
-            onClick={() => { navigate("/"); setMobile(false); }}
+            onClick={() => handleNav("/")} // Logo click par bhi top pe jaye
             whileHover="hover"
           >
             <motion.h2
@@ -65,18 +77,18 @@ export default function Navbar() {
             <span style={styles.logoSubText}>SECURITY SYSTEMS</span>
           </motion.div>
 
+          {/* Desktop Menu */}
           <div style={styles.menuDesktop} className="desktop-only">
-            <NavItem to="/" label="HOME" active={isActive("/")} />
-            <NavItem to="/about" label="ABOUT" active={isActive("/about")} />
+            <NavItem label="HOME" active={isActive("/")} onClick={() => handleNav("/")} />
+            <NavItem label="ABOUT" active={isActive("/about")} onClick={() => handleNav("/about")} />
 
             <div
               style={styles.dropdown}
               onMouseEnter={() => setOpen(true)}
               onMouseLeave={() => setOpen(false)}
             >
-              <motion.div whileHover={{ y: -2 }}>
-                <Link
-                  to="/services"
+              <motion.div whileHover={{ y: -2 }} style={{ cursor: 'pointer' }} onClick={() => handleNav("/services")}>
+                <span
                   style={{
                     ...styles.link,
                     color: (location.pathname.startsWith("/services") || location.pathname.match(/\/(cctv|housekeeping|security)/))
@@ -84,7 +96,7 @@ export default function Navbar() {
                   }}
                 >
                   SERVICES <span style={{fontSize: 10}}>▼</span>
-                </Link>
+                </span>
                 {(location.pathname.startsWith("/services") || location.pathname.match(/\/(cctv|housekeeping|security)/)) && (
                   <motion.div layoutId="underline" style={styles.activeLine} />
                 )}
@@ -98,17 +110,18 @@ export default function Navbar() {
                     exit={{ opacity: 0, y: 20, scale: 0.95 }}
                     style={styles.dropdownMenu}
                   >
-                    <Link style={styles.ddItem} to="/cctv" className="dd-item-hover">🎥 CCTV SURVEILLANCE</Link>
-                    <Link style={styles.ddItem} to="/housekeeping" className="dd-item-hover">🧹 ELITE HOUSEKEEPING</Link>
-                    <Link style={styles.ddItem} to="/security" className="dd-item-hover">🛡 SOCIETY PROTECTION</Link>
+                    <div style={styles.ddItem} onClick={() => handleNav("/cctv")} className="dd-item-hover">🎥 CCTV SURVEILLANCE</div>
+                    <div style={styles.ddItem} onClick={() => handleNav("/housekeeping")} className="dd-item-hover">🧹 ELITE HOUSEKEEPING</div>
+                    <div style={styles.ddItem} onClick={() => handleNav("/security")} className="dd-item-hover">🛡 SOCIETY PROTECTION</div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            <NavItem to="/contact" label="CONTACT" active={isActive("/contact")} />
+            <NavItem label="CONTACT" active={isActive("/contact")} onClick={() => handleNav("/contact")} />
           </div>
 
+          {/* Social icons handle */}
           <div style={styles.socialWrap} className="desktop-only">
             <SocialIcon href={socialLinks.instagram}><FaInstagram /></SocialIcon>
             <SocialIcon href={socialLinks.facebook}><FaFacebookF /></SocialIcon>
@@ -121,76 +134,49 @@ export default function Navbar() {
             </motion.button>
           </div>
 
+          {/* Hamburger Menu Toggle */}
           <div 
             style={{...styles.hamburger, height: 20, justifyContent: 'space-between'}} 
             className="hamburger-menu" 
             onClick={() => setMobile(!mobile)}
           >
-            <motion.div 
-              animate={mobile ? { rotate: 45, y: 9, width: 30 } : { rotate: 0, y: 0, width: 25 }} 
-              style={styles.bar} 
-            />
-            <motion.div 
-              animate={mobile ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }} 
-              style={styles.bar} 
-            />
-            <motion.div 
-              animate={mobile ? { rotate: -45, y: -9, width: 30 } : { rotate: 0, y: 0, width: 25 }} 
-              style={styles.bar} 
-            />
+            <motion.div animate={mobile ? { rotate: 45, y: 9, width: 30 } : { rotate: 0, y: 0, width: 25 }} style={styles.bar} />
+            <motion.div animate={mobile ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }} style={styles.bar} />
+            <motion.div animate={mobile ? { rotate: -45, y: -9, width: 30 } : { rotate: 0, y: 0, width: 25 }} style={styles.bar} />
           </div>
         </div>
 
+        {/* Mobile Sidebar */}
         <AnimatePresence>
           {mobile && (
             <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setMobile(false)}
-                style={styles.mobileOverlay}
-              />
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setMobile(false)} style={styles.mobileOverlay} />
               <motion.div 
-                initial={{ x: "100%" }} 
-                animate={{ x: 0 }} 
-                exit={{ x: "100%" }}
+                initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 style={styles.mobileMenu}
               >
                  <h3 style={styles.mobileLabel}>COMMAND_CENTER</h3>
-                 
-                 <Link onClick={() => setMobile(false)} style={styles.mobileLink} to="/">HOME</Link>
-                 <Link onClick={() => setMobile(false)} style={styles.mobileLink} to="/about">ABOUT</Link>
+                 <div onClick={() => handleNav("/")} style={styles.mobileLink}>HOME</div>
+                 <div onClick={() => handleNav("/about")} style={styles.mobileLink}>ABOUT</div>
                  
                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div 
-                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                      style={{ ...styles.mobileLink, display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}
-                    >
-                      SERVICES 
-                      <motion.div animate={{ rotate: mobileServicesOpen ? 90 : 0 }}>
-                        <FaChevronRight size={18} color="#00e0ff" />
-                      </motion.div>
+                    <div onClick={() => setMobileServicesOpen(!mobileServicesOpen)} style={{ ...styles.mobileLink, display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+                      SERVICES <motion.div animate={{ rotate: mobileServicesOpen ? 90 : 0 }}><FaChevronRight size={18} color="#00e0ff" /></motion.div>
                     </div>
                     
                     <AnimatePresence>
                       {mobileServicesOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          style={{ overflow: 'hidden', paddingLeft: 15, display: 'flex', flexDirection: 'column', gap: 18, marginTop: 15 }}
-                        >
-                          <Link onClick={() => setMobile(false)} style={styles.mobileSubLink} to="/cctv">🎥 CCTV SYSTEM</Link>
-                          <Link onClick={() => setMobile(false)} style={styles.mobileSubLink} to="/housekeeping">🧹 HOUSEKEEPING</Link>
-                          <Link onClick={() => setMobile(false)} style={styles.mobileSubLink} to="/security">🛡 SOCIETY GUARD</Link>
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden', paddingLeft: 15, display: 'flex', flexDirection: 'column', gap: 18, marginTop: 15 }}>
+                          <div onClick={() => handleNav("/cctv")} style={styles.mobileSubLink}>🎥 CCTV SYSTEM</div>
+                          <div onClick={() => handleNav("/housekeeping")} style={styles.mobileSubLink}>🧹 HOUSEKEEPING</div>
+                          <div onClick={() => handleNav("/security")} style={styles.mobileSubLink}>🛡 SOCIETY GUARD</div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                  </div>
 
-                 <Link onClick={() => setMobile(false)} style={styles.mobileLink} to="/contact">CONTACT</Link>
+                 <div onClick={() => handleNav("/contact")} style={styles.mobileLink}>CONTACT</div>
                  
                  <div style={styles.mobileSocials}>
                     <a href={socialLinks.instagram} target="_blank" rel="noreferrer"><FaInstagram size={28} color="#00e0ff"/></a>
@@ -207,24 +193,26 @@ export default function Navbar() {
             .desktop-only { display: none !important; }
             .hamburger-menu { display: flex !important; z-index: 10001; position: relative; }
           }
-          .dd-item-hover:hover { background: rgba(0,224,255,0.1); color: #00e0ff !important; }
+          .dd-item-hover:hover { background: rgba(0,224,255,0.1); color: #00e0ff !important; cursor: pointer; }
         `}</style>
       </nav>
     </>
   );
 }
 
-function NavItem({ to, label, active }) {
+// NavItem Component with onClick support
+function NavItem({ label, active, onClick }) {
   return (
-    <motion.div style={{ position: 'relative' }} whileHover={{ y: -2 }}>
-      <Link to={to} style={{ ...styles.link, color: active ? "#00e0ff" : "#fff" }}>
+    <motion.div style={{ position: 'relative', cursor: 'pointer' }} whileHover={{ y: -2 }} onClick={onClick}>
+      <span style={{ ...styles.link, color: active ? "#00e0ff" : "#fff" }}>
         {label}
-      </Link>
+      </span>
       {active && <motion.div layoutId="underline" style={styles.activeLine} />}
     </motion.div>
   );
 }
 
+// Rest of your SocialIcon and styles...
 function SocialIcon({ href, children }) {
   return (
     <motion.a href={href} target="_blank" rel="noreferrer" style={styles.socialIcon} whileHover={{ scale: 1.2, color: "#00e0ff" }}>
@@ -234,7 +222,7 @@ function SocialIcon({ href, children }) {
 }
 
 const styles = {
-  // ... (Baaki styles wahi hain)
+  // Styles copy from your code...
   nav: { position: "fixed", top: 0, left: 0, width: "100%", zIndex: 9999, backdropFilter: "blur(20px)", transition: "all 0.4s ease", boxSizing: 'border-box' },
   container: { maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" },
   navScanner: { position: 'absolute', bottom: 0, left: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00e0ff, transparent)' },
@@ -255,7 +243,7 @@ const styles = {
   mobileOverlay: { position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', zIndex: 9998 },
   mobileMenu: { position: "fixed", right: 0, top: 0, height: "100vh", width: "85%", maxWidth: 350, background: "#02040f", padding: "80px 30px 40px", display: "flex", flexDirection: "column", gap: 22, borderLeft: '1px solid #00e0ff', overflowY: 'auto', zIndex: 9999 },
   mobileLabel: { color:'#00e0ff', fontSize: 10, letterSpacing: 5, marginBottom: 15, opacity: 0.7 },
-  mobileLink: { color: "#fff", textDecoration: "none", fontSize: 26, fontWeight: 900, letterSpacing: 1 },
-  mobileSubLink: { color: "#fff", textDecoration: "none", fontSize: 15, fontWeight: 600, borderLeft: '2px solid #00e0ff', paddingLeft: 15, opacity: 0.9 },
+  mobileLink: { color: "#fff", textDecoration: "none", fontSize: 26, fontWeight: 900, letterSpacing: 1, cursor: 'pointer' },
+  mobileSubLink: { color: "#fff", textDecoration: "none", fontSize: 15, fontWeight: 600, borderLeft: '2px solid #00e0ff', paddingLeft: 15, opacity: 0.9, cursor: 'pointer' },
   mobileSocials: { marginTop: 'auto', display: 'flex', gap: 25, paddingTop: 30 }
 };
