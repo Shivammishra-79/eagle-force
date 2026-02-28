@@ -79,7 +79,7 @@ export default function Footer() {
       {/* 🔻 BOTTOM BAR */}
       <div style={styles.bottom}>
         <div style={styles.bottomContent}>
-          <p>© {new Date().getFullYear()} EAGLE FORCE SECURITY SERVICES PVT. LTD.</p>
+          <p>© {new Date().getFullYear()} EAGLE FORCE SECURITY SERVICES PVT. LTD. DEVELOPED BY SHIVAM MISHRA</p>
           <p style={{color: '#00e0ff', fontWeight: 'bold'}}>ALL RIGHTS RESERVED.</p>
         </div>
       </div>
