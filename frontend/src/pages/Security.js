@@ -6,7 +6,7 @@ import {
 
 export default function Security() {
   // 🚀 Har portal link par aapka portfolio khulega
-  const portfolioLink = "https://shivam-portfolio-inky.vercel.app/";
+  const portfolioLink = "#";
 
   const securityUnits = [
     {
@@ -155,7 +155,7 @@ export default function Security() {
           whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.02, backgroundColor: '#fff', color: '#000' }}
           style={styles.cta}
-          onClick={() => window.location.href="tel:+918998998989"}
+          onClick={() => window.location.href="tel:+919967875227"}
         >
           <FaUserShield style={{marginRight: '15px'}} />
           NEED EMERGENCY SECURITY OR LEGAL AID? CONNECT_NOW

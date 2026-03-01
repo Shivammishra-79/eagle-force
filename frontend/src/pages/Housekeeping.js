@@ -93,7 +93,7 @@ export default function Housekeeping() {
         <motion.div 
           whileHover={{ scale: 1.02 }}
           style={styles.cta}
-          onClick={() => window.location.href="tel:+919876543210"}
+          onClick={() => window.location.href="tel:+919967875227"}
         >
           <div style={styles.ctaPulse} />
           <span style={{ position: 'relative', zIndex: 2 }}>REQUEST_FACILITY_AUDIT_NOW →</span>

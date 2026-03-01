@@ -12,9 +12,9 @@ export default function Navbar() {
   const location = useLocation();
 
   const socialLinks = {
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
-    youtube: "https://youtube.com"
+    instagram: "#",//Link
+    facebook: "#",
+    youtube: "#"
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function Navbar() {
             >
               🦅 EAGLE FORCE
             </motion.h2>
-            <span style={styles.logoSubText}>SECURITY SYSTEMS</span>
+            <span style={styles.logoSubText}>SECURITY SYSTEMS PVT. LTD. </span>
           </motion.div>
 
           {/* Desktop Menu */}
@@ -128,7 +128,7 @@ export default function Navbar() {
             <motion.button 
               whileHover={{ scale: 1.05, backgroundColor: "#00e0ff", color: "#000" }}
               style={styles.navCallBtn}
-              onClick={() => window.location.href="tel:+918998998989"}
+              onClick={() => window.location.href="tel:+919967875227"}
             >
               CALL NOW
             </motion.button>

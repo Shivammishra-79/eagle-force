@@ -14,7 +14,7 @@ export default function Contact() {
   const handleChange = (e) => { setForm({ ...form, [e.target.name]: e.target.value }); };
 
   const openPortfolio = () => {
-    window.open("https://shivam-portfolio-inky.vercel.app/", "_blank");
+    window.open("#", "_blank");//Portal Link
   };
 
   const handleSubmit = async (e) => {
@@ -94,15 +94,15 @@ export default function Contact() {
             style={styles.card}
           >
             <h3 style={styles.cardTitle}>// CONTACT INFO</h3>
-            <div style={styles.infoLine}><FaPhoneAlt color="#00e0ff" /> +91 8998998989</div>
-            <div style={styles.infoLine}><FaEnvelope color="#00e0ff" /> info@eagleforce.in</div>
-            <div style={styles.infoLine}><FaMapMarkerAlt color="#00e0ff" /> Balkum, Thane - 400608</div>
+            <div style={styles.infoLine}><FaPhoneAlt color="#00e0ff" /> +91 9967875227</div>
+            <div style={styles.infoLine}><FaEnvelope color="#00e0ff" /> Email</div>
+            <div style={styles.infoLine}><FaMapMarkerAlt color="#00e0ff" />No 1, Suryawanshi Niwas, Ram Maruti Nagar, Balkum, Thane, Maharashtra 400601</div>
             
             <div style={styles.socialRow}>
-              <SocialIcon href="https://wa.me/918998998989" icon={<FaWhatsapp />} color="#25D366" />
-              <SocialIcon href="https://instagram.com" icon={<FaInstagram />} color="#E1306C" />
-              <SocialIcon href="https://facebook.com" icon={<FaFacebook />} color="#1877F2" />
-              <SocialIcon href="https://youtube.com" icon={<FaYoutube />} color="#FF0000" />
+              <SocialIcon href="https://wa.me/+919967875227" icon={<FaWhatsapp />} color="#25D366" />
+              <SocialIcon href="#" icon={<FaInstagram />} color="#E1306C" />
+              <SocialIcon href="#" icon={<FaFacebook />} color="#1877F2" />
+              <SocialIcon href="#" icon={<FaYoutube />} color="#FF0000" />
             </div>
           </motion.div>
 
@@ -117,7 +117,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} style={styles.form}>
               <input 
                 type="text"
-                placeholder="Your Name" 
+                placeholder="Enter Your Name" 
                 name="name" 
                 value={form.name} 
                 onChange={handleChange} 
@@ -126,7 +126,7 @@ export default function Contact() {
               />
               <input 
                 type="tel"
-                placeholder="Phone Number" 
+                placeholder="Enter Your Phone Number" 
                 name="phone" 
                 value={form.phone} 
                 onChange={handleChange} 
@@ -135,7 +135,7 @@ export default function Contact() {
               {/* FIXED EMAIL FIELD HERE */}
               <input 
                 type="email"
-                placeholder="Official Email Address" 
+                placeholder="Enter Your Email Address" 
                 name="email" 
                 value={form.email} 
                 onChange={handleChange} 
@@ -192,8 +192,7 @@ export default function Contact() {
       <div className="map-box">
         <div className="radar-line" />
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15068.79469176378!2d72.981882!3d19.220199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b9687105930b%3A0xa196f424c53c3912!2sBalkum%20Pada%2C%20Majiwada%2C%20Thane%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-          style={styles.mapIframe}
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.391895622805!2d72.98493227466864!3d19.221744947382028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b94dfe6c1e71%3A0xb694cb6541651d82!2sEagle%20Force%20Security%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1772392583930!5m2!1sen!2sin"          style={styles.mapIframe}
           allowFullScreen=""
           loading="lazy"
           title="Thane Location"

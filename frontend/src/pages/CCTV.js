@@ -10,7 +10,7 @@ export default function CCTV() {
       img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800" 
     },
     {
-      title: "AMC (ANNUAL MAINTENANCE)",
+      title: "AMC (ANNUAL MAINTENANCE CONTRACT)",
       icon: <FaShieldVirus />,
       desc: "Priority support contract including quarterly health checks, lens cleaning, and software updates.",
       img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800"
@@ -127,7 +127,7 @@ export default function CCTV() {
         <motion.div 
           whileHover={{ scale: 1.01 }}
           style={styles.ctaStrip}
-          onClick={() => window.location.href="tel:+919876543210"}
+          onClick={() => window.location.href="tel:+919967875227"}
         >
           <div style={styles.ctaText}>
             <FaTools style={{marginRight: '15px'}} />

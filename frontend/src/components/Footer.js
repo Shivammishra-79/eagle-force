@@ -25,7 +25,7 @@ export default function Footer() {
               <FaShieldAlt style={{ color: "#00e0ff", marginRight: 10 }} />
               EAGLE FORCE
             </h2>
-            <span style={styles.logoSubText}>SECURITY SYSTEMS</span>
+            <span style={styles.logoSubText}>SECURITY SYSTEMS PVT. LTD. </span>
           </motion.div>
           <p style={styles.desc}>
             Professional Security & Facility Management Solutions. We provide advanced AI surveillance and elite guard forces across India.
@@ -58,18 +58,18 @@ export default function Footer() {
         <div style={styles.col} className="footer-col">
           <h4 style={styles.heading}>CONTACT INFO</h4>
           <div style={styles.info} className="footer-info">
-            <FaPhoneAlt style={{color: '#00e0ff'}} /> +91 98765 43210
+            <FaPhoneAlt style={{color: '#00e0ff'}} /> +91 9967875227
           </div>
           <div style={styles.info} className="footer-info">
-            <FaEnvelope style={{color: '#00e0ff'}} /> info@eagleforce.in
+            <FaEnvelope style={{color: '#00e0ff'}} /> //Email ID
           </div>
           <div style={styles.info} className="footer-info">
-            <FaMapMarkerAlt style={{color: '#00e0ff'}} /> Mumbai, Maharashtra
+            <FaMapMarkerAlt style={{color: '#00e0ff'}} /> No 1, Suryawanshi Niwas, Ram Maruti Nagar, Balkum, Thane, Maharashtra 400601
           </div>
           <motion.button 
             whileHover={{ scale: 1.05, backgroundColor: "#00e0ff", color: "#000" }}
             style={styles.footerBtn}
-            onClick={() => window.location.href="tel:+919876543210"}
+            onClick={() => window.location.href="tel:+919967875227"}
           >
             FREE CONSULTATION
           </motion.button>

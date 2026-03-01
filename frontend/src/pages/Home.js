@@ -147,13 +147,13 @@ export default function Home() {
             <div style={styles.trustBar} className="trust-bar">
               <div style={styles.trustItem}>⭐ 4.9 Rating</div>
               <div style={styles.trustItem}>1200+ Secured</div>
-              <div style={styles.trustItem}>ISO 9001:2015</div>
+              <div style={styles.trustItem}>ISO 9001:2014</div>
             </div>
 
             <div style={styles.ctaRow} className="cta-row">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00e0ff" }}
-                onClick={() => window.location.href = "tel:+918998998989"}
+                onClick={() => window.location.href = "tel:+919967875227"}
                 style={styles.mainBtn}
                 className="cta-btn"
               >
@@ -264,7 +264,7 @@ export default function Home() {
           <h2 style={styles.finalTitle}>INITIALIZE SECURITY AUDIT?</h2>
           <p style={{ opacity: 0.6 }}>Eagle Force experts are standing by for Mumbai Metro Region (MMR).</p>
           <div style={styles.finalBtns} className="cta-row">
-            <button style={styles.primaryFinal} className="cta-btn" onClick={() => window.location.href = "tel:+918998998989"}>START CONSULTATION</button>
+            <button style={styles.primaryFinal} className="cta-btn" onClick={() => window.location.href = "tel:+919967875227"}>START CONSULTATION</button>
             <button style={styles.secondaryFinal} className="cta-btn" onClick={() => navigate("/contact")}>ENQUIRE NOW</button>
           </div>
         </motion.div>
@@ -273,7 +273,7 @@ export default function Home() {
       {/* FLOATING ACTION BUTTONS */}
       <div style={styles.floatingGroup} className="floating-group">
         <motion.a
-          href="https://wa.me/918998998989"
+          href="https://wa.me/+919967875227"
           target="_blank"
           className="float-btn"
           style={{ ...styles.floatBtn, background: "#25D366" }}
@@ -285,7 +285,7 @@ export default function Home() {
         </motion.a>
 
         <motion.a
-          href="mailto:sam7317892429@gmail.com"
+          href="#"//Email
           className="float-btn"
           style={{ ...styles.floatBtn, background: "#007cf0" }}
           animate={{ y: [0, -10, 0] }}
