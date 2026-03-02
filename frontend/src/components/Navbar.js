@@ -74,7 +74,7 @@ export default function Navbar() {
             >
               🦅 EAGLE FORCE
             </motion.h2>
-            <span style={styles.logoSubText}>SECURITY SYSTEMS PVT. LTD. </span>
+            <span style={styles.logoSubText}>SECURITY SERVICES PVT. LTD. </span>
           </motion.div>
 
           {/* Desktop Menu */}

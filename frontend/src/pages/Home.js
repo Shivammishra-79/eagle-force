@@ -107,7 +107,7 @@ export default function Home() {
       {/* STATUS BAR */}
       <div style={styles.statusBar}>
         <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 1.5 }}>●</motion.span>
-        &nbsp; SECURE CONNECTION | EAGLE FORCE SECURITY | SYSTEM READY 2026
+        &nbsp; SECURE CONNECTION | EAGLE FORCE SECURITY | SERVICES READY 2026
       </div>
 
       {/* HERO SECTION */}

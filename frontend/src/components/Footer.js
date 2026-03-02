@@ -25,7 +25,7 @@ export default function Footer() {
               <FaShieldAlt style={{ color: "#00e0ff", marginRight: 10 }} />
               EAGLE FORCE
             </h2>
-            <span style={styles.logoSubText}>SECURITY SYSTEMS PVT. LTD. </span>
+            <span style={styles.logoSubText}>SECURITY SERVICES PVT. LTD. </span>
           </motion.div>
           <p style={styles.desc}>
             Professional Security & Facility Management Solutions. We provide advanced AI surveillance and elite guard forces across India.
@@ -85,7 +85,7 @@ export default function Footer() {
       </div>
 
       {/* 🦅 WATERMARK (Low Opacity for Premium Feel) */}
-      <div style={styles.watermark}>EAGLE FORCE</div>
+      <div style={styles.watermark}>🦅 EAGLE FORCE</div>
     </footer>
   );
 }
