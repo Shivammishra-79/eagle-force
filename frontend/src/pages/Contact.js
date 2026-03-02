@@ -29,7 +29,7 @@ export default function Contact() {
     setLoading(true);
     try {
       const API_URL = window.location.hostname === "localhost" 
-        ? "http://localhost:5000" : "https://eagle-backend-jy3e.onrender.com";
+        ? "http://localhost:5000" : "#"; //Link Backend
       
       const res = await axios.post(`${API_URL}/api/contact`, form);
       if (res.status === 200) {
