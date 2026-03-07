@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import CountUp from "react-countup";
 import { FaWhatsapp, FaEnvelope, FaShieldAlt, FaSatellite, FaMicrochip } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import ServiceCard from "../components/ServiceCard";
 
 export default function Home() {
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
   const [systemLog, setSystemLog] = useState("Initializing Eagle Force Protocols...");
+
+  // --- FIX: Scroll to top on component mount ---
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const bgY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
@@ -69,6 +73,12 @@ export default function Home() {
     "Daily Work Reports", "Custom Security Plans"
   ];
 
+  // Helper function to navigate and scroll to top
+  const handleNavigation = (path) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div style={styles.container}>
       <style>{`
@@ -95,7 +105,7 @@ export default function Home() {
         .float-btn:hover .tooltip { opacity: 1 !important; transform: translateX(-10px); }
       `}</style>
 
-      {/* --- NEW: INTERACTIVE TOP HUD --- */}
+      {/* --- HUD BAR --- */}
       <div style={styles.hudBar}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <span style={styles.livePulse}>● LIVE</span>
@@ -113,8 +123,6 @@ export default function Home() {
       {/* HERO SECTION */}
       <section style={styles.hero}>
         <motion.div style={{ ...styles.heroBg, y: bgY }} />
-        
-        {/* NEW: SCAN LINE EFFECT */}
         <motion.div 
           animate={{ top: ['0%', '100%', '0%'] }} 
           transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} 
@@ -123,7 +131,6 @@ export default function Home() {
 
         <div style={styles.heroOverlay} className="hero-content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={styles.heroContent}>
-            
             <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }} className="trust-bar">
               <span style={styles.tagline}><FaShieldAlt /> GRADE-A PROTECTION</span>
             </div>
@@ -160,7 +167,7 @@ export default function Home() {
                 CALL NOW
               </motion.button>
               <button 
-                onClick={() => navigate("/contact")} 
+                onClick={() => handleNavigation("/contact")} 
                 style={styles.secBtn}
                 className="cta-btn"
               >
@@ -169,8 +176,6 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-
-        {/* --- NEW: SIDE DECOR TECH TEXT --- */}
         <div className="hide-mobile" style={styles.techSideText}>
             EAGLE FORCE // SYSTEM_V4.2 // SECURITY_ARMED // AI_ACTIVE
         </div>
@@ -193,7 +198,7 @@ export default function Home() {
         ))}
       </section>
 
-      {/* --- NEW: TECH CARDS SECTION --- */}
+      {/* TECH CARDS SECTION */}
       <section style={{ padding: '60px 8%', background: '#050505', borderBottom: '1px solid #111' }}>
           <div style={styles.featureGrid} className="feature-grid">
               <div style={styles.techCard}>
@@ -231,7 +236,7 @@ export default function Home() {
               </ul>
 
               <button 
-                onClick={() => navigate(service.path)} 
+                onClick={() => handleNavigation(service.path)} 
                 style={styles.viewDetailBtn}
               >
                 VIEW DETAILS →
@@ -265,7 +270,7 @@ export default function Home() {
           <p style={{ opacity: 0.6 }}>Eagle Force experts are standing by for Mumbai Metro Region (MMR).</p>
           <div style={styles.finalBtns} className="cta-row">
             <button style={styles.primaryFinal} className="cta-btn" onClick={() => window.location.href = "tel:+919967875227"}>START CONSULTATION</button>
-            <button style={styles.secondaryFinal} className="cta-btn" onClick={() => navigate("/contact")}>ENQUIRE NOW</button>
+            <button style={styles.secondaryFinal} className="cta-btn" onClick={() => handleNavigation("/contact")}>ENQUIRE NOW</button>
           </div>
         </motion.div>
       </section>
@@ -285,7 +290,7 @@ export default function Home() {
         </motion.a>
 
         <motion.a
-          href="#"//Email
+          href="#"
           className="float-btn"
           style={{ ...styles.floatBtn, background: "#007cf0" }}
           animate={{ y: [0, -10, 0] }}
