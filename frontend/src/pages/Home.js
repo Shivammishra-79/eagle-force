@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { FaWhatsapp, FaEnvelope, FaShieldAlt, FaSatellite, FaMicrochip } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
-// --- INTERNAL COMPONENT: ServiceCard (Ab Home me hi hai) ---
+// --- INTERNAL COMPONENT: ServiceCard ---
 const LocalServiceCard = ({ title, desc, img, onClick }) => {
   return (
     <motion.div
@@ -122,31 +122,41 @@ export default function Home() {
       <style>{`
         @keyframes pulse-cyan { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
         .log-text { font-family: 'Courier New', monospace; font-size: 11px; color: #00e0ff; letter-spacing: 1px; }
+        
+        /* Mobile Specific Fixes */
         @media (max-width: 768px) {
-          .hero-content { padding: 0 5% !important; text-align: center; justify-content: center; }
-          .hero-title { font-size: 38px !important; line-height: 1.1 !important; }
-          .hero-sub { font-size: 15px !important; margin: 15px auto !important; }
-          .cta-row { flex-direction: column !important; gap: 12px !important; align-items: center; }
-          .cta-btn { width: 100% !important; max-width: 300px; padding: 15px !important; }
-          .stats-grid { grid-template-columns: 1fr 1fr !important; }
-          .stat-box { padding: 30px 10px !important; }
-          .stat-num { font-size: 32px !important; }
-          .spec-grid { grid-template-columns: 1fr !important; gap: 30px !important; justify-items: center !important; }
-          .feature-grid { grid-template-columns: 1fr !important; }
-          .floating-group { right: 15px !important; bottom: 15px !important; }
-          .float-btn { width: 50px !important; height: 50px !important; }
-          .final-box { padding: 40px 15px !important; }
-          .trust-bar { justify-content: center !important; }
-          .hide-mobile { display: none !important; }
+          .hero-content { padding: 0 5% !important; text-align: center !important; }
+          .hero-title { font-size: 34px !important; line-height: 1.2 !important; margin-top: 20px !important; }
+          .hero-sub { font-size: 14px !important; margin: 15px auto !important; padding: 0 10px; }
+          .cta-row { flex-direction: column !important; gap: 10px !important; align-items: center; width: 100%; }
+          .cta-btn { width: 90% !important; padding: 14px !important; }
+          
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .stat-box { padding: 25px 5px !important; border-bottom: 1px solid #111; }
+          .stat-num { font-size: 28px !important; }
+          
+          .spec-grid { grid-template-columns: 1fr !important; padding: 0 20px !important; gap: 20px !important; }
+          .feature-grid { grid-template-columns: 1fr !important; padding: 0 10px !important; }
+          
+          .hud-bar { top: 70px !important; left: 10px !important; right: 10px !important; padding: 5px 10px !important; }
+          .spec-section { padding: 60px 5% !important; }
+          .feature-section { padding: 60px 5% !important; }
+          
+          .final-box { padding: 30px 15px !important; border-radius: 0px !important; }
+          .final-title { font-size: 24px !important; }
+          .trust-bar { justify-content: center !important; gap: 8px !important; }
+          .floating-group { right: 10px !important; bottom: 10px !important; }
+          .float-btn { width: 45px !important; height: 45px !important; }
         }
+
         .float-btn:hover .tooltip { opacity: 1 !important; transform: translateX(-10px); }
       `}</style>
 
       {/* HUD BAR */}
-      <div style={styles.hudBar}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+      <div style={styles.hudBar} className="hud-bar">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={styles.livePulse}>● LIVE</span>
-          <span className="log-text">{systemLog}</span>
+          <span className="log-text" style={{ fontSize: '9px' }}>{systemLog}</span>
         </div>
         <div className="hide-mobile" style={{ fontSize: '10px', opacity: 0.5 }}>LAT: 19.0760° N | LON: 72.8777° E</div>
       </div>
@@ -154,7 +164,7 @@ export default function Home() {
       {/* STATUS BAR */}
       <div style={styles.statusBar}>
         <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 1.5 }}>●</motion.span>
-        &nbsp; SECURE CONNECTION | EAGLE FORCE SECURITY | SERVICES READY 2026
+        &nbsp; SECURE CONNECTION | EAGLE FORCE SECURITY
       </div>
 
       {/* HERO SECTION */}
@@ -163,47 +173,41 @@ export default function Home() {
         <motion.div animate={{ top: ['0%', '100%', '0%'] }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} style={styles.scanLine} />
         <div style={styles.heroOverlay} className="hero-content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={styles.heroContent}>
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }} className="trust-bar"><span style={styles.tagline}><FaShieldAlt /> GRADE-A PROTECTION</span></div>
-            <h1 style={styles.heroTitle} className="hero-title">ADVANCED <span style={styles.cyanText}>AI SECURITY</span><br />SYSTEMS & SURVEILLANCE</h1>
-            <div style={styles.keywordCloud} className="trust-bar">{serviceKeywords.map((k, i) => (<span key={i} style={styles.miniTag}>{k}</span>))}</div>
-            <p style={styles.heroSub} className="hero-sub">Expert CCTV installation and 24/7 security monitoring for Mumbai's elite properties, factories, and housing societies.</p>
-            <div style={styles.trustBar} className="trust-bar">
-              <div style={styles.trustItem}>⭐ 4.9 Rating</div>
-              <div style={styles.trustItem}>1200+ Secured</div>
-              <div style={styles.trustItem}>ISO 9001:2014</div>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }} className="trust-bar">
+              <span style={styles.tagline}><FaShieldAlt /> GRADE-A PROTECTION</span>
             </div>
+            <h1 style={styles.heroTitle} className="hero-title">
+              ADVANCED <span style={styles.cyanText}>AI SECURITY</span><br />SYSTEMS
+            </h1>
+            <div style={styles.keywordCloud} className="trust-bar">
+              {serviceKeywords.slice(0, 3).map((k, i) => (
+                <span key={i} style={styles.miniTag}>{k}</span>
+              ))}
+            </div>
+            <p style={styles.heroSub} className="hero-sub">Expert CCTV and 24/7 security monitoring for Mumbai's elite properties.</p>
             <div style={styles.ctaRow} className="cta-row">
-              <motion.button whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00e0ff" }} onClick={() => window.location.href = "tel:+919967875227"} style={styles.mainBtn} className="cta-btn">CALL NOW</motion.button>
+              <motion.button whileHover={{ scale: 1.05 }} onClick={() => window.location.href = "tel:+919967875227"} style={styles.mainBtn} className="cta-btn">CALL NOW</motion.button>
               <button onClick={() => handleNavigation("/contact")} style={styles.secBtn} className="cta-btn">REQUEST QUOTE</button>
             </div>
           </motion.div>
         </div>
-        <div className="hide-mobile" style={styles.techSideText}>EAGLE FORCE // SYSTEM_V4.2 // SECURITY_ARMED // AI_ACTIVE</div>
       </section>
 
       {/* STATS SECTION */}
       <section style={styles.statsGrid} className="stats-grid">
         {stats.map((s, i) => (
-          <motion.div key={i} style={styles.statBox} className="stat-box" whileHover={{ background: "#0a0a0a", borderTop: "2px solid #00e0ff" }}>
-            <h2 style={styles.statNum} className="stat-num"><CountUp end={s.num} duration={2.5} suffix={s.label.includes("Rating") ? "★" : "+"} /></h2>
+          <div key={i} style={styles.statBox} className="stat-box">
+            <h2 style={styles.statNum} className="stat-num"><CountUp end={s.num} duration={2} suffix="+" /></h2>
             <p style={styles.statLabel}>{s.label}</p>
-          </motion.div>
+          </div>
         ))}
       </section>
 
-      {/* TECH CARDS SECTION */}
-      <section style={{ padding: '60px 8%', background: '#050505', borderBottom: '1px solid #111' }}>
-          <div style={styles.featureGrid} className="feature-grid">
-              <div style={styles.techCard}><FaSatellite style={{ color: '#00e0ff', fontSize: '24px' }} /><h4>Remote Access</h4><p>Watch live from anywhere in the world on your mobile.</p></div>
-              <div style={styles.techCard}><FaMicrochip style={{ color: '#00e0ff', fontSize: '24px' }} /><h4>AI Analytics</h4><p>Smart alerts for unauthorized human or vehicle entry.</p></div>
-          </div>
-      </section>
-
-      {/* SERVICES SECTION (Internal Implementation) */}
-      <section style={styles.specSection}>
+      {/* SERVICES SECTION */}
+      <section style={styles.specSection} className="spec-section">
         <div style={styles.sectionHeader}>
-          <h2 style={{fontSize: '24px'}}>// COMMAND CENTER SERVICES</h2>
-          <motion.div animate={{ width: ["0%", "100%"] }} transition={{ duration: 2, repeat: Infinity }} style={styles.headerLine} />
+          <h2 style={{fontSize: '20px'}}>// COMMAND CENTER SERVICES</h2>
+          <div style={styles.headerLine} />
         </div>
         <div style={styles.specGrid} className="spec-grid">
           {servicesDetailed.map((service, idx) => (
@@ -219,102 +223,81 @@ export default function Home() {
       </section>
 
       {/* FEATURES SECTION */}
-      <section style={styles.featureSection}>
-        <h2 style={styles.centerTitle}>CORE SECURITY FEATURES</h2>
+      <section style={styles.featureSection} className="feature-section">
+        <h2 style={styles.centerTitle}>CORE FEATURES</h2>
         <div style={styles.featureGrid} className="feature-grid">
           {features.map((f, i) => (
-            <motion.div key={i} whileInView={{ opacity: [0, 1], x: [-20, 0] }} whileHover={{ x: 10, borderColor: "#00e0ff" }} style={styles.featureItem}>
-              <span style={{ color: "#00e0ff", marginRight: '10px' }}>▶</span> {f}
-            </motion.div>
+            <div key={i} style={styles.featureItem}>
+              <span style={{ color: "#00e0ff" }}>▶</span> {f}
+            </div>
           ))}
         </div>
       </section>
 
       {/* FINAL CTA */}
       <section style={styles.finalSection}>
-        <motion.div initial={{ scale: 0.9 }} whileInView={{ scale: 1 }} style={styles.finalBox} className="final-box">
-          <h2 style={styles.finalTitle}>INITIALIZE SECURITY AUDIT?</h2>
-          <p style={{ opacity: 0.6 }}>Eagle Force experts are standing by for Mumbai Metro Region (MMR).</p>
+        <div style={styles.finalBox} className="final-box">
+          <h2 style={styles.finalTitle}>INITIALIZE AUDIT?</h2>
           <div style={styles.finalBtns} className="cta-row">
-            <button style={styles.primaryFinal} className="cta-btn" onClick={() => window.location.href = "tel:+919967875227"}>START CONSULTATION</button>
-            <button style={styles.secondaryFinal} className="cta-btn" onClick={() => handleNavigation("/contact")}>ENQUIRE NOW</button>
+            <button style={styles.primaryFinal} className="cta-btn" onClick={() => window.location.href = "tel:+919967875227"}>CONSULTATION</button>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* FLOATING ACTION BUTTONS */}
       <div style={styles.floatingGroup} className="floating-group">
-        <motion.a href="https://wa.me/+919967875227" target="_blank" className="float-btn" style={{ ...styles.floatBtn, background: "#25D366" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity }}>
-          <FaWhatsapp size={28} /><span className="tooltip" style={styles.tooltip}>WhatsApp</span>
-        </motion.a>
-        <motion.a href="#" className="float-btn" style={{ ...styles.floatBtn, background: "#007cf0" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}>
-          <FaEnvelope size={22} /><span className="tooltip" style={styles.tooltip}>Email</span>
-        </motion.a>
+        <a href="https://wa.me/+919967875227" target="_blank" className="float-btn" style={{ ...styles.floatBtn, background: "#25D366" }}>
+          <FaWhatsapp size={24} />
+        </a>
       </div>
     </div>
   );
 }
 
-// --- ALL STYLES (Dono components ke ek sath) ---
+// --- STYLES ---
 const cardStyles = {
-  card: { width: "100%", maxWidth: "340px", background: "rgba(5, 8, 22, 0.8)", backdropFilter: "blur(10px)", borderRadius: "2px", overflow: "hidden", cursor: "pointer", border: "1px solid rgba(0,224,255,0.2)", position: "relative", transition: "0.3s", marginBottom: "20px" },
+  card: { width: "100%", maxWidth: "340px", background: "#0a0a0a", borderRadius: "2px", overflow: "hidden", border: "1px solid #222", position: "relative", margin: "0 auto" },
   cardHeaderDecor: { display: 'flex', alignItems: 'center', padding: '10px', gap: '8px' },
   dot: { width: 6, height: 6, borderRadius: '50%', background: '#00e0ff' },
   line: { flex: 1, height: '1px', background: 'rgba(0,224,255,0.2)' },
-  imgWrap: { position: "relative", height: 180, overflow: "hidden", borderBottom: '1px solid rgba(0,224,255,0.1)' },
-  img: { width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(0.3) brightness(0.8)" },
-  overlay: { position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #02040a)' },
-  scanLine: { position: 'absolute', left: 0, width: '100%', height: '2px', background: 'rgba(0,224,255,0.5)', boxShadow: '0 0 10px #00e0ff', zIndex: 2 },
-  content: { padding: "20px" },
-  categoryTag: { fontSize: '9px', color: '#00e0ff', letterSpacing: '2px', marginBottom: '8px', fontWeight: 'bold' },
-  title: { margin: 0, fontSize: 18, color: "#fff", fontWeight: 900, letterSpacing: 1 },
-  desc: { marginTop: 10, fontSize: 13, color: "#aaa", lineHeight: 1.6, minHeight: '60px' },
-  btn: { marginTop: 20, display: "inline-block", padding: "10px 20px", border: "1px solid #00e0ff", fontSize: 11, fontWeight: 900, color: "#00e0ff", transition: "0.3s", letterSpacing: 1 },
-  corner: { position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, background: '#00e0ff', clipPath: 'polygon(100% 0, 100% 100%, 0 100%)', opacity: 0.5 }
+  imgWrap: { position: "relative", height: 160, overflow: "hidden" },
+  img: { width: "100%", height: "100%", objectFit: "cover" },
+  overlay: { position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #000)' },
+  scanLine: { position: 'absolute', left: 0, width: '100%', height: '2px', background: '#00e0ff', zIndex: 2 },
+  content: { padding: "15px" },
+  categoryTag: { fontSize: '9px', color: '#00e0ff', marginBottom: '8px' },
+  title: { margin: 0, fontSize: 16, color: "#fff", fontWeight: "bold" },
+  desc: { marginTop: 8, fontSize: 12, color: "#aaa", lineHeight: 1.5 },
+  btn: { marginTop: 15, display: "inline-block", padding: "8px 16px", border: "1px solid #00e0ff", fontSize: 10, color: "#00e0ff" },
+  corner: { position: 'absolute', bottom: 0, right: 0, width: 15, height: 15, background: '#00e0ff', clipPath: 'polygon(100% 0, 100% 100%, 0 100%)', opacity: 0.3 }
 };
 
 const styles = {
-  container: { background: "#000", color: "#fff", fontFamily: "'Courier New', monospace", overflowX: "hidden" },
-  hudBar: { position: 'fixed', top: '95px', left: '20px', right: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 9000, background: 'rgba(0,0,0,0.5)', padding: '5px 15px', borderLeft: '3px solid #00e0ff' },
-  livePulse: { fontSize: '10px', fontWeight: 'bold', color: '#ff4d4d', animation: 'pulse-cyan 1s infinite' },
-  statusBar: { background: "#00e0ff", color: "#000", fontSize: "10px", fontWeight: "bold", padding: "6px 20px", position: "fixed", top: 0, width: "100%", zIndex: 10000, letterSpacing: "1px" },
-  hero: { minHeight: "100vh", position: "relative", overflow: "hidden", display: "flex", alignItems: "center", paddingTop: '80px' },
-  heroBg: { position: "absolute", width: "100%", height: "130%", backgroundImage: "url('https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0, filter: "brightness(0.3) grayscale(0.5)" },
-  scanLine: { position: 'absolute', width: '100%', height: '2px', background: 'rgba(0, 224, 255, 0.2)', boxShadow: '0 0 15px #00e0ff', zIndex: 5, pointerEvents: 'none' },
-  heroOverlay: { zIndex: 10, padding: "0 8%", width: "100%", display: 'flex', alignItems: 'center' },
-  heroContent: { maxWidth: "800px" },
-  tagline: { color: '#00e0ff', fontSize: '12px', letterSpacing: '3px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' },
-  heroTitle: { fontSize: "clamp(40px, 8vw, 85px)", fontWeight: "900", lineHeight: 1, letterSpacing: "-2px", margin: 0 },
-  cyanText: { color: "#00e0ff", textShadow: "0 0 20px rgba(0,224,255,0.3)" },
-  keywordCloud: { display: "flex", gap: "8px", flexWrap: "wrap", margin: "20px 0" },
-  miniTag: { fontSize: "10px", border: "1px solid #222", padding: "4px 8px", color: "#00e0ff", background: "rgba(0,224,255,0.05)" },
-  heroSub: { fontSize: "17px", color: "#aaa", margin: "20px 0", lineHeight: 1.6, maxWidth: "550px" },
-  trustBar: { display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "10px" },
-  trustItem: { fontSize: "12px", color: "#00e0ff", border: "1px solid #113a44", background: "rgba(0,224,255,0.06)", padding: "5px 10px", fontWeight: "bold" },
-  ctaRow: { display: "flex", gap: "15px", marginTop: "30px" },
-  mainBtn: { background: "#00e0ff", color: "#000", padding: "16px 35px", border: "none", fontWeight: "900", cursor: "pointer", fontSize: '15px' },
-  secBtn: { background: "transparent", border: "1px solid #fff", color: "#fff", padding: "16px 35px", cursor: "pointer", fontSize: '15px' },
-  techSideText: { position: 'absolute', right: '-80px', top: '50%', transform: 'rotate(90deg)', fontSize: '11px', color: '#00e0ff', opacity: 0.3, letterSpacing: '5px' },
-  statsGrid: { display: "grid", gridTemplateColumns: "repeat(6, 1fr)", background: "#050505", borderBottom: "1px solid #111" },
-  statBox: { padding: "50px 20px", textAlign: "center", borderRight: "1px solid #111" },
-  statNum: { fontSize: "42px", color: "#00e0ff", margin: 0, fontWeight: "900" },
-  statLabel: { fontSize: "11px", color: "#666", letterSpacing: "1px", marginTop: "8px" },
-  techCard: { background: '#0a0a0a', padding: '30px', border: '1px solid #111', borderRadius: '4px', textAlign: 'center', flex: 1 },
+  container: { background: "#000", color: "#fff", fontFamily: "sans-serif", overflowX: "hidden" },
+  hudBar: { position: 'fixed', top: '90px', left: '20px', right: '20px', display: 'flex', justifyContent: 'space-between', zIndex: 9000, background: 'rgba(0,0,0,0.8)', padding: '8px 15px', borderLeft: '3px solid #00e0ff' },
+  livePulse: { fontSize: '9px', fontWeight: 'bold', color: '#ff4d4d' },
+  statusBar: { background: "#00e0ff", color: "#000", fontSize: "9px", fontWeight: "bold", padding: "5px 20px", position: "fixed", top: 0, width: "100%", zIndex: 10000, textAlign: 'center' },
+  hero: { minHeight: "85vh", position: "relative", display: "flex", alignItems: "center", paddingTop: '60px' },
+  heroBg: { position: "absolute", width: "100%", height: "100%", backgroundImage: "url('https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000')", backgroundSize: "cover", zIndex: 0, filter: "brightness(0.3)" },
+  scanLine: { position: 'absolute', width: '100%', height: '1px', background: 'rgba(0, 224, 255, 0.3)', zIndex: 5 },
+  heroOverlay: { zIndex: 10, padding: "0 8%", width: "100%" },
+  heroTitle: { fontSize: "60px", fontWeight: "900", margin: 0, textTransform: 'uppercase' },
+  cyanText: { color: "#00e0ff" },
+  heroSub: { fontSize: "16px", color: "#ccc", margin: "20px 0", maxWidth: "500px" },
+  ctaRow: { display: "flex", gap: "15px" },
+  mainBtn: { background: "#00e0ff", color: "#000", padding: "14px 30px", border: "none", fontWeight: "bold", cursor: "pointer" },
+  secBtn: { background: "transparent", border: "1px solid #fff", color: "#fff", padding: "14px 30px", cursor: "pointer" },
+  statsGrid: { display: "grid", gridTemplateColumns: "repeat(6, 1fr)", background: "#050505" },
+  statBox: { padding: "40px 10px", textAlign: "center", border: "0.1px solid #111" },
+  statNum: { fontSize: "36px", color: "#00e0ff", margin: 0 },
+  statLabel: { fontSize: "10px", color: "#777", marginTop: "5px" },
   specSection: { padding: "80px 8%" },
-  sectionHeader: { position: "relative", marginBottom: "40px", display: "inline-block" },
-  headerLine: { height: "2px", background: "#00e0ff", marginTop: "5px" },
   specGrid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "30px" },
-  featureSection: { padding: "80px 8%", background: "#030303" },
-  centerTitle: { textAlign: "center", fontSize: "28px", color: "#00e0ff", marginBottom: "50px", letterSpacing: "4px" },
-  featureGrid: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" },
-  featureItem: { background: "#080808", padding: "18px", border: "1px solid #1a1a1a", fontSize: '14px' },
-  finalSection: { padding: "100px 8%", textAlign: "center" },
-  finalBox: { border: "1px solid #00e0ff", padding: "70px 30px", background: "linear-gradient(135deg, #001a1a 0%, #000 100%)", borderRadius: '8px' },
-  finalTitle: { fontSize: "32px", fontWeight: "900", marginBottom: "15px" },
-  finalBtns: { display: "flex", gap: "15px", justifyContent: "center", marginTop: "35px" },
-  primaryFinal: { background: "#00e0ff", border: "none", padding: "16px 35px", fontWeight: "bold", cursor: "pointer" },
-  secondaryFinal: { background: "transparent", border: "1px solid #fff", color: "#fff", padding: "16px 35px", cursor: "pointer" },
-  floatingGroup: { position: "fixed", bottom: "30px", right: "30px", display: "flex", flexDirection: "column", gap: "12px", zIndex: 4000 },
-  floatBtn: { width: "60px", height: "60px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textDecoration: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.4)", position: 'relative' },
-  tooltip: { position: "absolute", right: "75px", background: "#00e0ff", color: "#000", padding: "4px 10px", borderRadius: "4px", fontSize: "11px", fontWeight: "bold", opacity: 0, transition: "0.3s", pointerEvents: "none" }
+  featureSection: { padding: "60px 8%", background: "#050505" },
+  featureGrid: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" },
+  featureItem: { background: "#0a0a0a", padding: "15px", border: "1px solid #111", fontSize: '13px' },
+  finalSection: { padding: "60px 5%", textAlign: "center" },
+  finalBox: { border: "1px solid #00e0ff", padding: "50px 20px" },
+  floatingGroup: { position: "fixed", bottom: "30px", right: "30px", zIndex: 9999 },
+  floatBtn: { width: "55px", height: "55px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }
 };
