@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { FaShieldAlt, FaEye, FaUsers, FaCogs, FaBuilding, FaMicrochip } from "react-icons/fa";
 
 export default function About() {
+  // Page load par top par le jane ke liye
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fadeIn = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
@@ -20,15 +26,20 @@ export default function About() {
 
   return (
     <div style={styles.container}>
-      {/* 🛠 MOBILE RESPONSIVE CSS */}
+      {/* 🛠 MOBILE RESPONSIVE CSS - Navbar Compatibility Included */}
       <style>{`
+        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: 0%; } }
+        .about-hero h1 { font-size: clamp(35px, 8vw, 60px) !important; }
         @media (max-width: 768px) {
-          .about-hero h1 { font-size: 40px !important; }
           .vision-mission { grid-template-columns: 1fr !important; }
           .industry-grid { grid-template-columns: 1fr 1fr !important; }
-          .container-padding { padding: 100px 20px 50px !important; }
+          .container-padding { padding: 120px 20px 50px !important; }
+          .stat-group { gap: 30px !important; }
         }
       `}</style>
+
+      {/* Decorative Scanline effect for Cyber Theme */}
+      <div style={styles.scanEffect} />
 
       <div className="container-padding" style={styles.wrapper}>
         
@@ -47,7 +58,7 @@ export default function About() {
 
         {/* 📊 CORE VALUES (VISION/MISSION) */}
         <div style={styles.grid2} className="vision-mission">
-          <motion.div {...fadeIn} style={styles.card}>
+          <motion.div {...fadeIn} style={styles.card} whileHover={{ borderColor: "#00e0ff" }}>
             <div style={styles.cardHeader}>
               <FaEye style={styles.icon} />
               <h2 style={styles.cardTitle}>OUR VISION</h2>
@@ -59,7 +70,7 @@ export default function About() {
             <div style={styles.cardDecor} />
           </motion.div>
 
-          <motion.div {...fadeIn} style={styles.card}>
+          <motion.div {...fadeIn} style={styles.card} whileHover={{ borderColor: "#00e0ff" }}>
             <div style={styles.cardHeader}>
               <FaShieldAlt style={styles.icon} />
               <h2 style={styles.cardTitle}>OUR MISSION</h2>
@@ -82,28 +93,30 @@ export default function About() {
           {industries.map((item, idx) => (
             <motion.div 
               key={idx}
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(0, 224, 255, 0.1)" }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(0, 224, 255, 0.05)", borderColor: "#00e0ff" }}
               style={styles.industryCard}
             >
-              <span style={{ fontSize: "30px", marginBottom: "10px" }}>{item.icon}</span>
+              <span style={{ fontSize: "40px", marginBottom: "15px", display: "block" }}>{item.icon}</span>
               <p style={styles.industryName}>{item.name}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* ⚡ WHY CHOOSE US */}
-        <section style={styles.statsSection}>
+        {/* ⚡ WHY CHOOSE US - STATS */}
+        <section style={styles.statsSection} className="stat-group">
           <div style={styles.statBox}>
             <FaMicrochip style={styles.statIcon} />
-            <h4>AI INTEGRATED</h4>
+            <h4 style={styles.statLabel}>AI INTEGRATED</h4>
           </div>
           <div style={styles.statBox}>
             <FaUsers style={styles.statIcon} />
-            <h4>ELITE FORCE</h4>
+            <h4 style={styles.statLabel}>ELITE FORCE</h4>
           </div>
           <div style={styles.statBox}>
             <FaCogs style={styles.statIcon} />
-            <h4>24/7 SUPPORT</h4>
+            <h4 style={styles.statLabel}>24/7 SUPPORT</h4>
           </div>
         </section>
 
@@ -117,88 +130,105 @@ const styles = {
     background: "#02040a",
     color: "#fff",
     minHeight: "100vh",
-    fontFamily: "inherit",
+    fontFamily: "'Courier New', monospace",
     position: "relative",
     overflow: "hidden"
   },
+  scanEffect: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    background: 'linear-gradient(to bottom, transparent 50%, rgba(0, 224, 255, 0.02) 50%)',
+    backgroundSize: '100% 4px',
+    zIndex: 1,
+    pointerEvents: 'none'
+  },
   wrapper: {
-    maxWidth: "1100px",
+    maxWidth: "1200px",
     margin: "0 auto",
-    padding: "150px 40px 100px",
+    padding: "160px 40px 100px", // Adjusted for Navbar height (85px + breathing room)
+    position: 'relative',
+    zIndex: 2
   },
   hero: {
     textAlign: "center",
-    marginBottom: "80px"
+    marginBottom: "100px"
   },
   tag: {
     fontSize: "12px",
     color: "#00e0ff",
     letterSpacing: "4px",
     fontWeight: "bold",
-    marginBottom: "20px"
+    marginBottom: "20px",
+    opacity: 0.8
   },
   mainTitle: {
     fontSize: "60px",
     fontWeight: "900",
-    letterSpacing: "-1px",
-    margin: "0 0 20px 0",
-    lineHeight: 1
+    letterSpacing: "-2px",
+    margin: "0 0 25px 0",
+    lineHeight: 1.1,
+    fontFamily: "'Syncopate', sans-serif"
   },
-  cyanText: { color: "#00e0ff" },
+  cyanText: { 
+    color: "#00e0ff",
+    textShadow: "0 0 15px rgba(0, 224, 255, 0.4)"
+  },
   mainDesc: {
     fontSize: "18px",
     color: "#888",
-    maxWidth: "800px",
+    maxWidth: "850px",
     margin: "0 auto",
-    lineHeight: "1.6"
+    lineHeight: "1.8"
   },
   grid2: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: "30px",
-    marginBottom: "100px"
+    gap: "40px",
+    marginBottom: "120px"
   },
   card: {
-    background: "rgba(255, 255, 255, 0.02)",
+    background: "rgba(255, 255, 255, 0.01)",
     border: "1px solid rgba(0, 224, 255, 0.1)",
-    padding: "40px",
+    padding: "50px 40px",
     position: "relative",
-    overflow: "hidden"
+    overflow: "hidden",
+    transition: "0.4s ease"
   },
-  cardHeader: { display: "flex", alignItems: "center", gap: "15px", marginBottom: "20px" },
-  icon: { color: "#00e0ff", fontSize: "24px" },
-  cardTitle: { fontSize: "20px", fontWeight: "bold", letterSpacing: "2px", margin: 0 },
-  cardText: { color: "#aaa", fontSize: "15px", lineHeight: "1.8" },
+  cardHeader: { display: "flex", alignItems: "center", gap: "15px", marginBottom: "25px" },
+  icon: { color: "#00e0ff", fontSize: "28px" },
+  cardTitle: { fontSize: "22px", fontWeight: "bold", letterSpacing: "2px", margin: 0 },
+  cardText: { color: "#aaa", fontSize: "16px", lineHeight: "1.8" },
   cardDecor: {
     position: "absolute", bottom: 0, left: 0, width: "100%", height: "2px",
     background: "linear-gradient(90deg, #00e0ff, transparent)"
   },
-  sectionHeader: { textAlign: "center", marginBottom: "50px" },
-  subTitle: { fontSize: "24px", fontWeight: "bold", letterSpacing: "5px" },
-  line: { width: "100px", height: "3px", background: "#00e0ff", margin: "15px auto" },
+  sectionHeader: { textAlign: "center", marginBottom: "60px" },
+  subTitle: { fontSize: "24px", fontWeight: "bold", letterSpacing: "6px", color: "#fff" },
+  line: { width: "80px", height: "3px", background: "#00e0ff", margin: "20px auto" },
   industryGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "20px",
-    marginBottom: "100px"
+    gap: "25px",
+    marginBottom: "120px"
   },
   industryCard: {
-    background: "rgba(255, 255, 255, 0.03)",
-    padding: "30px",
+    background: "rgba(255, 255, 255, 0.02)",
+    padding: "40px 20px",
     textAlign: "center",
     border: "1px solid #111",
     cursor: "crosshair",
-    transition: "0.3s"
+    transition: "0.3s ease"
   },
-  industryName: { fontSize: "14px", fontWeight: "bold", letterSpacing: "1px", margin: 0 },
+  industryName: { fontSize: "13px", fontWeight: "900", letterSpacing: "2px", margin: 0, color: "#eee" },
   statsSection: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-around",
     gap: "50px",
     flexWrap: "wrap",
-    borderTop: "1px solid #111",
-    paddingTop: "50px"
+    borderTop: "1px solid rgba(0, 224, 255, 0.1)",
+    paddingTop: "70px"
   },
   statBox: { textAlign: "center" },
-  statIcon: { fontSize: "30px", color: "#00e0ff", marginBottom: "10px", opacity: 0.5 },
+  statIcon: { fontSize: "35px", color: "#00e0ff", marginBottom: "15px", opacity: 0.7 },
+  statLabel: { fontSize: "14px", fontWeight: "900", letterSpacing: "2px", color: "#00e0ff" }
 };

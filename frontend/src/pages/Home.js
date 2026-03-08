@@ -4,12 +4,57 @@ import CountUp from "react-countup";
 import { FaWhatsapp, FaEnvelope, FaShieldAlt, FaSatellite, FaMicrochip } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
+// --- INTERNAL COMPONENT: ServiceCard (Ab Home me hi hai) ---
+const LocalServiceCard = ({ title, desc, img, onClick }) => {
+  return (
+    <motion.div
+      onClick={onClick}
+      whileHover={{ 
+        y: -12, 
+        rotateX: 5, 
+        rotateY: -5,
+        borderColor: "#00e0ff",
+        boxShadow: "0 0 30px rgba(0, 224, 255, 0.2)"
+      }}
+      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+      style={cardStyles.card}
+    >
+      <div style={cardStyles.cardHeaderDecor}>
+        <div style={cardStyles.dot} />
+        <div style={cardStyles.line} />
+      </div>
+
+      <div style={cardStyles.imgWrap}>
+        <img src={img} alt={title} style={cardStyles.img} />
+        <div style={cardStyles.overlay} />
+        <motion.div 
+          animate={{ top: ["0%", "100%", "0%"] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          style={cardStyles.scanLine} 
+        />
+      </div>
+
+      <div style={cardStyles.content}>
+        <div style={cardStyles.categoryTag}>SECURITY_UNIT</div>
+        <h3 style={cardStyles.title}>{title}</h3>
+        <p style={cardStyles.desc}>{desc}</p>
+        <motion.div
+          whileHover={{ scale: 1.05, backgroundColor: "#00e0ff", color: "#000" }}
+          style={cardStyles.btn}
+        >
+          VIEW_PROTOCOL →
+        </motion.div>
+      </div>
+      <div style={cardStyles.corner} />
+    </motion.div>
+  );
+};
+
 export default function Home() {
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
   const [systemLog, setSystemLog] = useState("Initializing Eagle Force Protocols...");
 
-  // --- FIX: Scroll to top on component mount ---
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -17,7 +62,6 @@ export default function Home() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const bgY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
 
-  // --- Dynamic System Logs for Engagement ---
   useEffect(() => {
     const logs = [
       "Scanning Perimeter... OK",
@@ -47,33 +91,27 @@ export default function Home() {
   const servicesDetailed = [
     {
       title: "CCTV & Security",
-      points: ["Human Detection AI", "Clear Night Vision", "Mobile Phone Access", "24/7 Monitoring"],
-      icon: "📹",
+      desc: "Advanced AI Human Detection, Night Vision, and 24/7 Mobile Access.",
+      img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=800",
       path: "/cctv"
     },
     {
       title: "Cleaning Services",
-      points: ["Home & Office Sanitization", "Maintenance Work", "Deep Cleaning Service", "Safe Chemicals"],
-      icon: "🧹",
+      desc: "Deep Sanitization, Maintenance, and Professional Housekeeping.",
+      img: "https://images.unsplash.com/photo-1581578731548-c64695ce6958?q=80&w=800",
       path: "/housekeeping"
     },
     {
       title: "Society Security",
-      points: ["Visitor Record App", "Automatic Gate Pass", "Trained Guards", "Fire Safety Training"],
-      icon: "🏘️",
+      desc: "Trained Guards, Visitor Apps, and Automatic Gate Pass Systems.",
+      img: "https://images.unsplash.com/photo-1582139329536-e7284fece509?q=80&w=800",
       path: "/security"
     }
   ];
 
   const serviceKeywords = ["AI DETECTION", "MUMBAI MMR", "24/7 LIVE", "SMART ALARMS", "NIGHT VISION"];
+  const features = ["Well Trained Guards", "24/7 Quick Support", "Modern Technology", "Verified Staff", "Service Across India", "Office Security Experts", "Daily Work Reports", "Custom Security Plans"];
 
-  const features = [
-    "Well Trained Guards", "24/7 Quick Support", "Modern Technology",
-    "Verified Staff", "Service Across India", "Office Security Experts",
-    "Daily Work Reports", "Custom Security Plans"
-  ];
-
-  // Helper function to navigate and scroll to top
   const handleNavigation = (path) => {
     navigate(path);
     window.scrollTo(0, 0);
@@ -93,9 +131,8 @@ export default function Home() {
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
           .stat-box { padding: 30px 10px !important; }
           .stat-num { font-size: 32px !important; }
-          .spec-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .spec-grid { grid-template-columns: 1fr !important; gap: 30px !important; justify-items: center !important; }
           .feature-grid { grid-template-columns: 1fr !important; }
-          .marquee-text { font-size: 50px !important; }
           .floating-group { right: 15px !important; bottom: 15px !important; }
           .float-btn { width: 50px !important; height: 50px !important; }
           .final-box { padding: 40px 15px !important; }
@@ -105,7 +142,7 @@ export default function Home() {
         .float-btn:hover .tooltip { opacity: 1 !important; transform: translateX(-10px); }
       `}</style>
 
-      {/* --- HUD BAR --- */}
+      {/* HUD BAR */}
       <div style={styles.hudBar}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <span style={styles.livePulse}>● LIVE</span>
@@ -123,76 +160,32 @@ export default function Home() {
       {/* HERO SECTION */}
       <section style={styles.hero}>
         <motion.div style={{ ...styles.heroBg, y: bgY }} />
-        <motion.div 
-          animate={{ top: ['0%', '100%', '0%'] }} 
-          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} 
-          style={styles.scanLine} 
-        />
-
+        <motion.div animate={{ top: ['0%', '100%', '0%'] }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} style={styles.scanLine} />
         <div style={styles.heroOverlay} className="hero-content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={styles.heroContent}>
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }} className="trust-bar">
-              <span style={styles.tagline}><FaShieldAlt /> GRADE-A PROTECTION</span>
-            </div>
-
-            <h1 style={styles.heroTitle} className="hero-title">
-              ADVANCED <span style={styles.cyanText}>AI SECURITY</span><br />
-              SYSTEMS & SURVEILLANCE
-            </h1>
-
-            <div style={styles.keywordCloud} className="trust-bar">
-              {serviceKeywords.map((k, i) => (
-                <span key={i} style={styles.miniTag}>{k}</span>
-              ))}
-            </div>
-
-            <p style={styles.heroSub} className="hero-sub">
-              Expert CCTV installation and 24/7 security monitoring for Mumbai's elite properties, 
-              factories, and housing societies.
-            </p>
-
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }} className="trust-bar"><span style={styles.tagline}><FaShieldAlt /> GRADE-A PROTECTION</span></div>
+            <h1 style={styles.heroTitle} className="hero-title">ADVANCED <span style={styles.cyanText}>AI SECURITY</span><br />SYSTEMS & SURVEILLANCE</h1>
+            <div style={styles.keywordCloud} className="trust-bar">{serviceKeywords.map((k, i) => (<span key={i} style={styles.miniTag}>{k}</span>))}</div>
+            <p style={styles.heroSub} className="hero-sub">Expert CCTV installation and 24/7 security monitoring for Mumbai's elite properties, factories, and housing societies.</p>
             <div style={styles.trustBar} className="trust-bar">
               <div style={styles.trustItem}>⭐ 4.9 Rating</div>
               <div style={styles.trustItem}>1200+ Secured</div>
               <div style={styles.trustItem}>ISO 9001:2014</div>
             </div>
-
             <div style={styles.ctaRow} className="cta-row">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00e0ff" }}
-                onClick={() => window.location.href = "tel:+919967875227"}
-                style={styles.mainBtn}
-                className="cta-btn"
-              >
-                CALL NOW
-              </motion.button>
-              <button 
-                onClick={() => handleNavigation("/contact")} 
-                style={styles.secBtn}
-                className="cta-btn"
-              >
-                REQUEST QUOTE
-              </button>
+              <motion.button whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00e0ff" }} onClick={() => window.location.href = "tel:+919967875227"} style={styles.mainBtn} className="cta-btn">CALL NOW</motion.button>
+              <button onClick={() => handleNavigation("/contact")} style={styles.secBtn} className="cta-btn">REQUEST QUOTE</button>
             </div>
           </motion.div>
         </div>
-        <div className="hide-mobile" style={styles.techSideText}>
-            EAGLE FORCE // SYSTEM_V4.2 // SECURITY_ARMED // AI_ACTIVE
-        </div>
+        <div className="hide-mobile" style={styles.techSideText}>EAGLE FORCE // SYSTEM_V4.2 // SECURITY_ARMED // AI_ACTIVE</div>
       </section>
 
       {/* STATS SECTION */}
       <section style={styles.statsGrid} className="stats-grid">
         {stats.map((s, i) => (
-          <motion.div
-            key={i}
-            style={styles.statBox}
-            className="stat-box"
-            whileHover={{ background: "#0a0a0a", borderTop: "2px solid #00e0ff" }}
-          >
-            <h2 style={styles.statNum} className="stat-num">
-              <CountUp end={s.num} duration={2.5} suffix={s.label.includes("Rating") ? "★" : "+"} />
-            </h2>
+          <motion.div key={i} style={styles.statBox} className="stat-box" whileHover={{ background: "#0a0a0a", borderTop: "2px solid #00e0ff" }}>
+            <h2 style={styles.statNum} className="stat-num"><CountUp end={s.num} duration={2.5} suffix={s.label.includes("Rating") ? "★" : "+"} /></h2>
             <p style={styles.statLabel}>{s.label}</p>
           </motion.div>
         ))}
@@ -201,47 +194,26 @@ export default function Home() {
       {/* TECH CARDS SECTION */}
       <section style={{ padding: '60px 8%', background: '#050505', borderBottom: '1px solid #111' }}>
           <div style={styles.featureGrid} className="feature-grid">
-              <div style={styles.techCard}>
-                  <FaSatellite style={{ color: '#00e0ff', fontSize: '24px' }} />
-                  <h4>Remote Access</h4>
-                  <p>Watch live from anywhere in the world on your mobile.</p>
-              </div>
-              <div style={styles.techCard}>
-                  <FaMicrochip style={{ color: '#00e0ff', fontSize: '24px' }} />
-                  <h4>AI Analytics</h4>
-                  <p>Smart alerts for unauthorized human or vehicle entry.</p>
-              </div>
+              <div style={styles.techCard}><FaSatellite style={{ color: '#00e0ff', fontSize: '24px' }} /><h4>Remote Access</h4><p>Watch live from anywhere in the world on your mobile.</p></div>
+              <div style={styles.techCard}><FaMicrochip style={{ color: '#00e0ff', fontSize: '24px' }} /><h4>AI Analytics</h4><p>Smart alerts for unauthorized human or vehicle entry.</p></div>
           </div>
       </section>
 
-      {/* SERVICES SECTION */}
+      {/* SERVICES SECTION (Internal Implementation) */}
       <section style={styles.specSection}>
         <div style={styles.sectionHeader}>
           <h2 style={{fontSize: '24px'}}>// COMMAND CENTER SERVICES</h2>
           <motion.div animate={{ width: ["0%", "100%"] }} transition={{ duration: 2, repeat: Infinity }} style={styles.headerLine} />
         </div>
-
         <div style={styles.specGrid} className="spec-grid">
           {servicesDetailed.map((service, idx) => (
-            <div key={idx} style={styles.specWrapper}>
-              <div style={styles.specHeader}>
-                <span style={{ fontSize: 30 }}>{service.icon}</span>
-                <h3 style={{color: '#00e0ff'}}>{service.title}</h3>
-              </div>
-
-              <ul style={styles.specList}>
-                {service.points.map((p, i) => (
-                  <li key={i}><span style={{ color: '#00e0ff' }}>_</span> {p}</li>
-                ))}
-              </ul>
-
-              <button 
-                onClick={() => handleNavigation(service.path)} 
-                style={styles.viewDetailBtn}
-              >
-                VIEW DETAILS →
-              </button>
-            </div>
+            <LocalServiceCard 
+              key={idx}
+              title={service.title}
+              desc={service.desc}
+              img={service.img}
+              onClick={() => handleNavigation(service.path)}
+            />
           ))}
         </div>
       </section>
@@ -251,19 +223,14 @@ export default function Home() {
         <h2 style={styles.centerTitle}>CORE SECURITY FEATURES</h2>
         <div style={styles.featureGrid} className="feature-grid">
           {features.map((f, i) => (
-            <motion.div
-              key={i}
-              whileInView={{ opacity: [0, 1], x: [-20, 0] }}
-              whileHover={{ x: 10, borderColor: "#00e0ff" }}
-              style={styles.featureItem}
-            >
+            <motion.div key={i} whileInView={{ opacity: [0, 1], x: [-20, 0] }} whileHover={{ x: 10, borderColor: "#00e0ff" }} style={styles.featureItem}>
               <span style={{ color: "#00e0ff", marginRight: '10px' }}>▶</span> {f}
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* FINAL CALL TO ACTION */}
+      {/* FINAL CTA */}
       <section style={styles.finalSection}>
         <motion.div initial={{ scale: 0.9 }} whileInView={{ scale: 1 }} style={styles.finalBox} className="final-box">
           <h2 style={styles.finalTitle}>INITIALIZE SECURITY AUDIT?</h2>
@@ -277,39 +244,41 @@ export default function Home() {
 
       {/* FLOATING ACTION BUTTONS */}
       <div style={styles.floatingGroup} className="floating-group">
-        <motion.a
-          href="https://wa.me/+919967875227"
-          target="_blank"
-          className="float-btn"
-          style={{ ...styles.floatBtn, background: "#25D366" }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-        >
-          <FaWhatsapp size={28} />
-          <span className="tooltip" style={styles.tooltip}>WhatsApp</span>
+        <motion.a href="https://wa.me/+919967875227" target="_blank" className="float-btn" style={{ ...styles.floatBtn, background: "#25D366" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity }}>
+          <FaWhatsapp size={28} /><span className="tooltip" style={styles.tooltip}>WhatsApp</span>
         </motion.a>
-
-        <motion.a
-          href="#"
-          className="float-btn"
-          style={{ ...styles.floatBtn, background: "#007cf0" }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-        >
-          <FaEnvelope size={22} />
-          <span className="tooltip" style={styles.tooltip}>Email</span>
+        <motion.a href="#" className="float-btn" style={{ ...styles.floatBtn, background: "#007cf0" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}>
+          <FaEnvelope size={22} /><span className="tooltip" style={styles.tooltip}>Email</span>
         </motion.a>
       </div>
     </div>
   );
 }
 
+// --- ALL STYLES (Dono components ke ek sath) ---
+const cardStyles = {
+  card: { width: "100%", maxWidth: "340px", background: "rgba(5, 8, 22, 0.8)", backdropFilter: "blur(10px)", borderRadius: "2px", overflow: "hidden", cursor: "pointer", border: "1px solid rgba(0,224,255,0.2)", position: "relative", transition: "0.3s", marginBottom: "20px" },
+  cardHeaderDecor: { display: 'flex', alignItems: 'center', padding: '10px', gap: '8px' },
+  dot: { width: 6, height: 6, borderRadius: '50%', background: '#00e0ff' },
+  line: { flex: 1, height: '1px', background: 'rgba(0,224,255,0.2)' },
+  imgWrap: { position: "relative", height: 180, overflow: "hidden", borderBottom: '1px solid rgba(0,224,255,0.1)' },
+  img: { width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(0.3) brightness(0.8)" },
+  overlay: { position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #02040a)' },
+  scanLine: { position: 'absolute', left: 0, width: '100%', height: '2px', background: 'rgba(0,224,255,0.5)', boxShadow: '0 0 10px #00e0ff', zIndex: 2 },
+  content: { padding: "20px" },
+  categoryTag: { fontSize: '9px', color: '#00e0ff', letterSpacing: '2px', marginBottom: '8px', fontWeight: 'bold' },
+  title: { margin: 0, fontSize: 18, color: "#fff", fontWeight: 900, letterSpacing: 1 },
+  desc: { marginTop: 10, fontSize: 13, color: "#aaa", lineHeight: 1.6, minHeight: '60px' },
+  btn: { marginTop: 20, display: "inline-block", padding: "10px 20px", border: "1px solid #00e0ff", fontSize: 11, fontWeight: 900, color: "#00e0ff", transition: "0.3s", letterSpacing: 1 },
+  corner: { position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, background: '#00e0ff', clipPath: 'polygon(100% 0, 100% 100%, 0 100%)', opacity: 0.5 }
+};
+
 const styles = {
   container: { background: "#000", color: "#fff", fontFamily: "'Courier New', monospace", overflowX: "hidden" },
-  hudBar: { position: 'fixed', top: '10px', left: '20px', right: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1001, background: 'rgba(0,0,0,0.5)', padding: '5px 15px', borderLeft: '3px solid #00e0ff' },
+  hudBar: { position: 'fixed', top: '95px', left: '20px', right: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 9000, background: 'rgba(0,0,0,0.5)', padding: '5px 15px', borderLeft: '3px solid #00e0ff' },
   livePulse: { fontSize: '10px', fontWeight: 'bold', color: '#ff4d4d', animation: 'pulse-cyan 1s infinite' },
-  statusBar: { background: "#00e0ff", color: "#000", fontSize: "10px", fontWeight: "bold", padding: "6px 20px", position: "fixed", top: 0, width: "100%", zIndex: 1000, letterSpacing: "1px" },
-  hero: { height: "100vh", position: "relative", overflow: "hidden", display: "flex", alignItems: "center" },
+  statusBar: { background: "#00e0ff", color: "#000", fontSize: "10px", fontWeight: "bold", padding: "6px 20px", position: "fixed", top: 0, width: "100%", zIndex: 10000, letterSpacing: "1px" },
+  hero: { minHeight: "100vh", position: "relative", overflow: "hidden", display: "flex", alignItems: "center", paddingTop: '80px' },
   heroBg: { position: "absolute", width: "100%", height: "130%", backgroundImage: "url('https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0, filter: "brightness(0.3) grayscale(0.5)" },
   scanLine: { position: 'absolute', width: '100%', height: '2px', background: 'rgba(0, 224, 255, 0.2)', boxShadow: '0 0 15px #00e0ff', zIndex: 5, pointerEvents: 'none' },
   heroOverlay: { zIndex: 10, padding: "0 8%", width: "100%", display: 'flex', alignItems: 'center' },
@@ -330,15 +299,11 @@ const styles = {
   statBox: { padding: "50px 20px", textAlign: "center", borderRight: "1px solid #111" },
   statNum: { fontSize: "42px", color: "#00e0ff", margin: 0, fontWeight: "900" },
   statLabel: { fontSize: "11px", color: "#666", letterSpacing: "1px", marginTop: "8px" },
-  techCard: { background: '#0a0a0a', padding: '30px', border: '1px solid #111', borderRadius: '4px', textAlign: 'center' },
+  techCard: { background: '#0a0a0a', padding: '30px', border: '1px solid #111', borderRadius: '4px', textAlign: 'center', flex: 1 },
   specSection: { padding: "80px 8%" },
   sectionHeader: { position: "relative", marginBottom: "40px", display: "inline-block" },
   headerLine: { height: "2px", background: "#00e0ff", marginTop: "5px" },
   specGrid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "30px" },
-  specWrapper: { background: "#080808", padding: "25px", border: "1px solid #111", borderRadius: '4px' },
-  specHeader: { display: "flex", alignItems: "center", gap: "12px", marginBottom: "15px" },
-  specList: { padding: 0, listStyle: "none", marginBottom: "25px", color: "#777", fontSize: "14px", lineHeight: '1.8' },
-  viewDetailBtn: { background: 'none', border: 'none', color: '#00e0ff', fontWeight: 'bold', cursor: 'pointer', padding: 0, fontSize: '13px', letterSpacing: '1px' },
   featureSection: { padding: "80px 8%", background: "#030303" },
   centerTitle: { textAlign: "center", fontSize: "28px", color: "#00e0ff", marginBottom: "50px", letterSpacing: "4px" },
   featureGrid: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" },
@@ -349,7 +314,7 @@ const styles = {
   finalBtns: { display: "flex", gap: "15px", justifyContent: "center", marginTop: "35px" },
   primaryFinal: { background: "#00e0ff", border: "none", padding: "16px 35px", fontWeight: "bold", cursor: "pointer" },
   secondaryFinal: { background: "transparent", border: "1px solid #fff", color: "#fff", padding: "16px 35px", cursor: "pointer" },
-  floatingGroup: { position: "fixed", bottom: "30px", right: "30px", display: "flex", flexDirection: "column", gap: "12px", zIndex: 1000 },
-  floatBtn: { width: "60px", height: "60px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textDecoration: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.4)" },
+  floatingGroup: { position: "fixed", bottom: "30px", right: "30px", display: "flex", flexDirection: "column", gap: "12px", zIndex: 4000 },
+  floatBtn: { width: "60px", height: "60px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textDecoration: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.4)", position: 'relative' },
   tooltip: { position: "absolute", right: "75px", background: "#00e0ff", color: "#000", padding: "4px 10px", borderRadius: "4px", fontSize: "11px", fontWeight: "bold", opacity: 0, transition: "0.3s", pointerEvents: "none" }
 };
