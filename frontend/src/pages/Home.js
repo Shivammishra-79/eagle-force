@@ -152,7 +152,7 @@ export default function Home() {
     {
       title: "Housekeeping",
       desc: "Professional deep cleaning and maintenance services for homes and offices.",
-      img: "https://images.unsplash.com/photo-1581578731548-c64695ce6958?q=80&w=800",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmTQ4snx-MINaG8iz46P01jJTArLMUQyEpOw&s",
       path: "/housekeeping"
     },
     {
